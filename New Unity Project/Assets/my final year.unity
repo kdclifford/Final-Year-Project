@@ -569,6 +569,32 @@ MonoBehaviour:
   horizontalInputName: Horizontal
   verticalInputName: Vertical
   movementSpeed: 6
+  jumpFallOff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0011253357
+      value: 0.9979248
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.6977539
+      value: 0.0020332336
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpMultiplier: 10
+  jumpKey: 32
 --- !u!1 &1848214752
 GameObject:
   m_ObjectHideFlags: 0
