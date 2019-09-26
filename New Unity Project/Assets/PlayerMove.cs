@@ -28,13 +28,13 @@ public class PlayerMove : MonoBehaviour
     }
     private void PlayerMovement()
     {
-        float horizInput = Input.GetAxis(horizontalInputName) * movementSpeed;
-        float vertInput = Input.GetAxis(verticalInputName) * movementSpeed;
+        float horizInput = Input.GetAxis(horizontalInputName);
+        float vertInput = Input.GetAxis(verticalInputName);
 
         Vector3 forwardMovement = transform.forward * vertInput;
         Vector3 rightMovement = transform.right * horizInput;
 
-        charController.SimpleMove(forwardMovement + rightMovement);
+        charController.SimpleMove(Vector3.ClampMagnitude( forwardMovement + rightMovement, 1.0f) * movementSpeed);
         JumpInput();
     }
 
