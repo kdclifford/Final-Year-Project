@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Camera
   - Enemy
+  - Vision Cone
   layers:
   - Default
   - TransparentFX

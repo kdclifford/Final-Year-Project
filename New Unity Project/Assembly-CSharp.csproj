@@ -68,6 +68,7 @@
     <Compile Include="Assets\CameraFps.cs" />
     <Compile Include="Assets\EnemyVision.cs" />
     <Compile Include="Assets\FieldOfView.cs" />
+    <Compile Include="Assets\FootSteps.cs" />
     <Compile Include="Assets\PlayerCamera.cs" />
     <Compile Include="Assets\PlayerMove.cs" />
     <Reference Include="Unity.Timeline.Editor">

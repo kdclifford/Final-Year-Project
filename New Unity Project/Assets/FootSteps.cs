@@ -2,17 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FieldOfView : MonoBehaviour
+public class FootSteps : MonoBehaviour
 {
 
     public float viewRadius;
-    [Range(0, 360)]
-    public float viewAngle;
+    private float viewAngle = 360;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-   // [HideInInspector]
+    // [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
     public float meshResolution;
@@ -35,7 +34,7 @@ public class FieldOfView : MonoBehaviour
     void Start()
     {
         enemyObject = this.gameObject;
-        visionCone = enemyObject.transform.Find("VisionCone").gameObject;
+        visionCone = enemyObject.transform.Find("FootSteps").gameObject;
         coneColour = visionCone.GetComponent<Renderer>();
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
@@ -43,7 +42,7 @@ public class FieldOfView : MonoBehaviour
 
         StartCoroutine("FindTargetsWithDelay", 0.2f);
     }
-    
+
     IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
@@ -54,7 +53,7 @@ public class FieldOfView : MonoBehaviour
     }
 
     void LateUpdate()
-    {      
+    {
         DrawFieldOfView();
         TargetInView();
     }
@@ -66,7 +65,7 @@ public class FieldOfView : MonoBehaviour
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
-            Transform target = targetsInViewRadius[i].transform;           
+            Transform target = targetsInViewRadius[i].transform;
 
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
@@ -86,7 +85,7 @@ public class FieldOfView : MonoBehaviour
         if (sizeOfList > 0)
         {
             coneColour.material = alertColour;
-                
+
         }
         else
         {
@@ -125,7 +124,7 @@ public class FieldOfView : MonoBehaviour
             }
 
 
-            
+
             viewPoints.Add(newViewCast.point);
             oldViewCast = newViewCast;
         }
