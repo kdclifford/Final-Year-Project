@@ -708,7 +708,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df48aa09c2c3bd84eaaba7c2515d00f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -719,10 +718,12 @@ MonoBehaviour:
   meshResolution: 1
   edgeResolveIterations: 6
   edgeDstThreshold: 1
-  visionConeheight: 0
+  footStepSoundRadius: 0
   viewMeshFilter: {fileID: 1860222999}
-  alertColour: {fileID: 2100000, guid: 8b4dab0859d8f6549b5d1789ff5201c1, type: 2}
-  normalColour: {fileID: 2100000, guid: 587d3d14144b0d44eb2df2e32ad7b06e, type: 2}
+  crouch: 304
+  sprint: 113
+  alertColour: {fileID: 2100000, guid: a148fdd150c217c41bfe7a09c3251585, type: 2}
+  normalColour: {fileID: 2100000, guid: af6718b3e8acae64c908dda6411c5219, type: 2}
 --- !u!54 &1557118098
 Rigidbody:
   m_ObjectHideFlags: 0

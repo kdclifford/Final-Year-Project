@@ -5,23 +5,25 @@ using System.Collections.Generic;
 public class FootSteps : MonoBehaviour
 {
 
-    public float viewRadius;
-    private float viewAngle = 360;
+    private float soundRadius = 10;
+    private float soundAngle = 360;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
     // [HideInInspector]
-    public List<Transform> visibleTargets = new List<Transform>();
+    public List<Transform> footStepTargets = new List<Transform>();
 
     public float meshResolution;
     public int edgeResolveIterations;
     public float edgeDstThreshold;
-    public float visionConeheight;
-
+    public float footStepSoundRadius;
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
+
+    public KeyCode crouch;
+    public KeyCode sprint;
 
     //**** Change the Vision Cone Colour
     private GameObject enemyObject;
@@ -51,29 +53,37 @@ public class FootSteps : MonoBehaviour
             FindVisibleTargets();
         }
     }
-
+  
     void LateUpdate()
     {
         DrawFieldOfView();
         TargetInView();
+        if(Input.GetKeyDown(crouch))
+        {
+            soundRadius = 5;
+        }
+        else if (Input.GetKeyUp(crouch))
+        {
+            soundRadius = 10;
+        }
     }
 
     void FindVisibleTargets()
     {
-        visibleTargets.Clear();
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        footStepTargets.Clear();
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, soundRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
 
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < soundAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
-                    visibleTargets.Add(target);
+                    footStepTargets.Add(target);
                 }
             }
         }
@@ -81,7 +91,7 @@ public class FootSteps : MonoBehaviour
 
     void TargetInView()
     {
-        int sizeOfList = visibleTargets.Count;
+        int sizeOfList = footStepTargets.Count;
         if (sizeOfList > 0)
         {
             coneColour.material = alertColour;
@@ -96,13 +106,13 @@ public class FootSteps : MonoBehaviour
 
     void DrawFieldOfView()
     {
-        int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
-        float stepAngleSize = viewAngle / stepCount;
+        int stepCount = Mathf.RoundToInt(soundAngle * meshResolution);
+        float stepAngleSize = soundAngle / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo oldViewCast = new ViewCastInfo();
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - soundAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(angle);
 
             if (i > 0)
@@ -134,11 +144,11 @@ public class FootSteps : MonoBehaviour
         int[] triangles = new int[(vertexCount - 2) * 3];
 
         vertices[0] = Vector3.zero;
-        vertices[0].y = visionConeheight;
+        vertices[0].y = footStepSoundRadius;
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-            vertices[i + 1].y = visionConeheight;
+            vertices[i + 1].y = footStepSoundRadius;
 
             if (i < vertexCount - 2)
             {
@@ -190,13 +200,13 @@ public class FootSteps : MonoBehaviour
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
+        if (Physics.Raycast(transform.position, dir, out hit, soundRadius, obstacleMask))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
         else
         {
-            return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+            return new ViewCastInfo(false, transform.position + dir * soundRadius, soundRadius, globalAngle);
         }
     }
 

@@ -31,10 +31,19 @@ public class FieldOfView : MonoBehaviour
     public Material alertColour;
     public Material normalColour;
 
+    Quaternion oldRotation;
+    private GameObject playerObject;
+    private FootSteps playerTargetList;
+
+    int playerFootSteps;
+    int sizeOfList;
+
     // **** Sets Varibles When The Project Starts ****
     void Start()
     {
         enemyObject = this.gameObject;
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerTargetList = playerObject.GetComponent<FootSteps>();
         visionCone = enemyObject.transform.Find("VisionCone").gameObject;
         coneColour = visionCone.GetComponent<Renderer>();
         viewMesh = new Mesh();
@@ -54,9 +63,12 @@ public class FieldOfView : MonoBehaviour
     }
 
     void LateUpdate()
-    {      
+    {
+        playerFootSteps = playerTargetList.footStepTargets.Count;
+        sizeOfList = visibleTargets.Count;
         DrawFieldOfView();
         TargetInView();
+        AI();
     }
 
     void FindVisibleTargets()
@@ -82,16 +94,19 @@ public class FieldOfView : MonoBehaviour
 
     void TargetInView()
     {
-        int sizeOfList = visibleTargets.Count;
+        sizeOfList = visibleTargets.Count;
         if (sizeOfList > 0)
         {
-            coneColour.material = alertColour;
-                
+            coneColour.material = alertColour;                
         }
         else
         {
             coneColour.material = normalColour;
         }
+
+
+
+
     }
 
 
@@ -235,6 +250,34 @@ public class FieldOfView : MonoBehaviour
         {
             pointA = _pointA;
             pointB = _pointB;
+        }
+    }
+
+
+    void AI()
+    {
+       
+        if (sizeOfList > 0)
+        {
+            //oldRotation = transform.rotation;
+            transform.LookAt(visibleTargets[0].transform);            
+        }
+        else if (playerFootSteps > 0)
+        {
+            for(int i = 0; i < playerFootSteps; i++)
+            {
+                if (playerTargetList.footStepTargets[i].transform == this.transform)
+                {
+                    transform.LookAt(playerObject.transform);                   
+                        coneColour.material = alertColour;
+                    
+                    
+                }
+                else
+                    {
+                        coneColour.material = normalColour;
+                    }
+            }
         }
     }
 
