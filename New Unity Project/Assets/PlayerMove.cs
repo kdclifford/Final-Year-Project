@@ -6,12 +6,12 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private string horizontalInputName;
     [SerializeField] private string verticalInputName;
-    [SerializeField] private float movementSpeed;
+    [SerializeField] public float movementSpeed;
 
     private CharacterController charController;
 
     [SerializeField] private AnimationCurve jumpFallOff;
-    [SerializeField] private float jumpMultiplier;
+    [SerializeField] public float jumpMultiplier;
     [SerializeField] private KeyCode jumpKey;
 
 

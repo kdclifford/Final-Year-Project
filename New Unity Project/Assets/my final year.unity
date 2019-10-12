@@ -708,20 +708,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df48aa09c2c3bd84eaaba7c2515d00f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundRadius: 0
+  soundSpeed: 0.05
+  t: 0
+  q: 0
+  p: 0
+  w: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  visibleTargets: []
+  footStepTargets: []
   meshResolution: 1
   edgeResolveIterations: 6
   edgeDstThreshold: 1
-  footStepSoundRadius: 0
+  soundHeight: -0.4
+  normalRadius: 10
+  normalSpeed: 6
+  normalJumpHeight: 10
+  sprintSpeed: 10
+  crouchSpeed: 3
+  crouchJumpHeight: 5
+  crouchRadius: 0
+  sprintRadius: 15
+  currentRadius: 0
   viewMeshFilter: {fileID: 1860222999}
   crouch: 304
   sprint: 113
+  forward: 119
+  back: 115
+  left: 97
+  right: 100
   alertColour: {fileID: 2100000, guid: a148fdd150c217c41bfe7a09c3251585, type: 2}
   normalColour: {fileID: 2100000, guid: af6718b3e8acae64c908dda6411c5219, type: 2}
 --- !u!54 &1557118098

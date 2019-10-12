@@ -5,9 +5,18 @@ using System.Collections.Generic;
 public class FootSteps : MonoBehaviour
 {
 
-    private float soundRadius = 10;
+    public float soundRadius;
+    private float stillRadius = 0.0f;
     private float soundAngle = 360;
-
+    public float soundSpeed;
+    [Range(0, 1)]
+    public float t;
+    [Range(0, 1)]
+    public float q;
+    [Range(0, 1)]
+    public float p;
+    [Range(0, 1)]
+    public float w;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
@@ -17,13 +26,29 @@ public class FootSteps : MonoBehaviour
     public float meshResolution;
     public int edgeResolveIterations;
     public float edgeDstThreshold;
-    public float footStepSoundRadius;
+    public float soundHeight;
 
+    // **** Movement ****
+    public float normalRadius;
+    public float normalSpeed;
+    public float normalJumpHeight;
+    public float sprintSpeed;
+    public float crouchSpeed;
+    public float crouchJumpHeight;
+    public float crouchRadius;
+    public float sprintRadius;
+    public float currentRadius; // used for the lerp
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    PlayerMove playerMovement;
+
     public KeyCode crouch;
     public KeyCode sprint;
+    public KeyCode forward;
+    public KeyCode back;
+    public KeyCode left;
+    public KeyCode right;
 
     //**** Change the Vision Cone Colour
     private GameObject enemyObject;
@@ -35,7 +60,9 @@ public class FootSteps : MonoBehaviour
     // **** Sets Varibles When The Project Starts ****
     void Start()
     {
+        currentRadius = normalRadius;
         enemyObject = this.gameObject;
+        playerMovement = enemyObject.GetComponent<PlayerMove>();
         visionCone = enemyObject.transform.Find("FootSteps").gameObject;
         coneColour = visionCone.GetComponent<Renderer>();
         viewMesh = new Mesh();
@@ -58,14 +85,99 @@ public class FootSteps : MonoBehaviour
     {
         DrawFieldOfView();
         TargetInView();
-        if(Input.GetKeyDown(crouch))
+
+
+        if (Input.GetKey(forward) | Input.GetKey(back) | Input.GetKey(left) | Input.GetKey(right))
         {
-            soundRadius = 5;
+            p += soundSpeed;
+            p = Mathf.Clamp(p, 0.0f, 1.0f);
+            soundRadius = stillRadius * (1 - p) + currentRadius * p;
+
+            if (!Input.GetKey(sprint))
+            {
+                p -= soundSpeed;
+                p = Mathf.Clamp(p, 0.0f, 1.0f);
+                soundRadius = normalRadius * (1 - p) + sprintRadius * p;
+            }
+
         }
-        else if (Input.GetKeyUp(crouch))
+        else
         {
-            soundRadius = 10;
+            p -= soundSpeed;
+            p = Mathf.Clamp(p, 0.0f, 1.0f);
+            soundRadius = stillRadius * (1 - p) + currentRadius * p;
+
+            if (soundRadius < sprintRadius & soundRadius > crouchRadius)
+            {
+                currentRadius = normalRadius;
+            }
+
         }
+        p = Mathf.Clamp(p, 0.0f, 1.0f);
+
+        if (Input.GetKey(crouch))
+        {
+            w += soundSpeed;
+            w = Mathf.Clamp(w, 0.0f, 1.0f);
+            playerMovement.movementSpeed = crouchSpeed;
+            playerMovement.jumpMultiplier = crouchJumpHeight;
+            currentRadius = currentRadius * (1 - w) + crouchRadius * w;
+        }
+        else if (Input.GetKey(sprint))
+        {
+            t += soundSpeed;
+            t = Mathf.Clamp(t, 0.0f, 1.0f);
+          //  soundRadius = currentRadius * (1 - t) + sprintRadius * t;
+            playerMovement.movementSpeed = sprintSpeed;
+            currentRadius = currentRadius * (1 - t) + sprintRadius * t;
+        }
+
+        if (Input.GetKeyUp(sprint))
+        {
+            t = 0.0f;
+        }
+
+
+        // **** Vison Cone LERP
+        //if (Input.GetKey(crouch))
+        //{
+        //    p += 0.1f;         
+        //    q = 0.0f;
+        //    t = 0.0f;
+        //    soundRadius = currentRadius * (1 - p) + crouchRadus * p;
+        //    playerMovement.movementSpeed = crouchSpeed;
+        //    playerMovement.jumpMultiplier = crouchJumpHeight;
+        //    currentRadius = soundRadius;
+        //}
+        //else if (Input.GetKey(sprint))
+        //{
+
+        //    t += 0.1f;
+        //    q = 0.0f;
+        //    p = 0.0f;
+
+        //    soundRadius = currentRadius * (1 - t) + sprintRadius * t;
+        //    playerMovement.movementSpeed = sprintSpeed;
+        //    currentRadius = soundRadius;
+        //}
+        //else 
+        //{
+        //    q += 0.1f;
+        //    soundRadius = currentRadius * (1 - q) + normalRadius * q;
+        //    t = 0.0f;
+        //    p = 0.0f;
+        //       // soundRadius = normalRadius * (1 - t) + currentRadius * t;
+
+        //    //soundRadius = normalRadius;
+        //    playerMovement.movementSpeed = normalSpeed;
+        //    playerMovement.jumpMultiplier = normalJumpHeight;
+        //    currentRadius = soundRadius;
+        //}
+        //t = Mathf.Clamp(t, 0.0f, 1.0f);
+        //q = Mathf.Clamp(q, 0.0f, 1.0f);
+        //p = Mathf.Clamp(p, 0.0f, 1.0f);
+
+
     }
 
     void FindVisibleTargets()
@@ -144,11 +256,11 @@ public class FootSteps : MonoBehaviour
         int[] triangles = new int[(vertexCount - 2) * 3];
 
         vertices[0] = Vector3.zero;
-        vertices[0].y = footStepSoundRadius;
+        vertices[0].y = soundHeight;
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-            vertices[i + 1].y = footStepSoundRadius;
+            vertices[i + 1].y = soundHeight;
 
             if (i < vertexCount - 2)
             {
