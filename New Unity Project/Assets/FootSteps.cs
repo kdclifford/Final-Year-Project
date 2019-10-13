@@ -89,53 +89,77 @@ public class FootSteps : MonoBehaviour
 
         if (Input.GetKey(forward) | Input.GetKey(back) | Input.GetKey(left) | Input.GetKey(right))
         {
-            p += soundSpeed;
-            p = Mathf.Clamp(p, 0.0f, 1.0f);
-            soundRadius = stillRadius * (1 - p) + currentRadius * p;
+           
 
-            if (!Input.GetKey(sprint))
+            //if (!Input.GetKey(sprint))
+            //{
+            //    p -= soundSpeed;
+            //    p = Mathf.Clamp(p, 0.0f, 1.0f);
+            //    soundRadius = normalRadius * (1 - p) + sprintRadius * p;
+            //}
+
+            if (Input.GetKey(crouch))
             {
-                p -= soundSpeed;
-                p = Mathf.Clamp(p, 0.0f, 1.0f);
-                soundRadius = normalRadius * (1 - p) + sprintRadius * p;
+                q = 0.0f;
+                p = 0.0f;
+                t = 0.0f;
+                currentRadius = crouchRadius;
+                w += soundSpeed;
+                w = Mathf.Clamp(w, 0.0f, 1.0f);
+                playerMovement.movementSpeed = crouchSpeed;
+                playerMovement.jumpMultiplier = crouchJumpHeight;
+                //currentRadius = currentRadius * (1 - w) + crouchRadius * w;
+                soundRadius = soundRadius * (1 - w) + crouchRadius * w;
             }
-
+            else if (Input.GetKey(sprint))
+            {
+                q = 0.0f;
+                p = 0.0f;
+                w = 0.0f;
+                currentRadius = sprintRadius;
+                t += soundSpeed;
+                t = Mathf.Clamp(t, 0.0f, 1.0f);
+                //  soundRadius = currentRadius * (1 - t) + sprintRadius * t;
+                playerMovement.movementSpeed = sprintSpeed;
+                // currentRadius = currentRadius * (1 - t) + sprintRadius * t;
+                soundRadius = soundRadius * (1 - t) + sprintRadius * t;
+            }
+            else
+            {
+                t = 0.0f;
+                w = 0.0f;
+                p = 0.0f;
+                playerMovement.movementSpeed = normalSpeed;
+                playerMovement.jumpMultiplier = normalJumpHeight;
+                q += soundSpeed;
+                q = Mathf.Clamp(q, 0.0f, 1.0f);
+                soundRadius = soundRadius * (1 - q) + normalRadius * q;
+            }
         }
         else
         {
-            p -= soundSpeed;
+            t = 0.0f;
+            w = 0.0f;
+            q = 0.0f;
+            p += soundSpeed;
             p = Mathf.Clamp(p, 0.0f, 1.0f);
-            soundRadius = stillRadius * (1 - p) + currentRadius * p;
-
-            if (soundRadius < sprintRadius & soundRadius > crouchRadius)
-            {
-                currentRadius = normalRadius;
-            }
+            soundRadius = soundRadius * (1 - p) + stillRadius * p;
+            playerMovement.movementSpeed = normalSpeed;
+            playerMovement.jumpMultiplier = normalJumpHeight;
+            //if (soundRadius < sprintRadius & soundRadius > crouchRadius)
+            //{
+            //    currentRadius = normalRadius;
+            //}
 
         }
         p = Mathf.Clamp(p, 0.0f, 1.0f);
 
-        if (Input.GetKey(crouch))
-        {
-            w += soundSpeed;
-            w = Mathf.Clamp(w, 0.0f, 1.0f);
-            playerMovement.movementSpeed = crouchSpeed;
-            playerMovement.jumpMultiplier = crouchJumpHeight;
-            currentRadius = currentRadius * (1 - w) + crouchRadius * w;
-        }
-        else if (Input.GetKey(sprint))
-        {
-            t += soundSpeed;
-            t = Mathf.Clamp(t, 0.0f, 1.0f);
-          //  soundRadius = currentRadius * (1 - t) + sprintRadius * t;
-            playerMovement.movementSpeed = sprintSpeed;
-            currentRadius = currentRadius * (1 - t) + sprintRadius * t;
-        }
+        
 
-        if (Input.GetKeyUp(sprint))
-        {
-            t = 0.0f;
-        }
+        //if (Input.GetKeyUp(sprint))
+        //{
+        //    t = 0.0f;
+        //}
 
 
         // **** Vison Cone LERP

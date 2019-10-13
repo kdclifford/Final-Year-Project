@@ -731,7 +731,7 @@ MonoBehaviour:
   sprintSpeed: 10
   crouchSpeed: 3
   crouchJumpHeight: 5
-  crouchRadius: 0
+  crouchRadius: 5
   sprintRadius: 15
   currentRadius: 0
   viewMeshFilter: {fileID: 1860222999}
