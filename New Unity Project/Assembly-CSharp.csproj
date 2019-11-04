@@ -69,8 +69,11 @@
     <Compile Include="Assets\EnemyVision.cs" />
     <Compile Include="Assets\FieldOfView.cs" />
     <Compile Include="Assets\FootSteps.cs" />
+    <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\PlayerCamera.cs" />
     <Compile Include="Assets\PlayerMove.cs" />
+    <None Include="Assets\Map0.txt" />
+    <None Include="Assets\Map1.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Kyle/Documents/GitHub/Final-Year-Project/New Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
