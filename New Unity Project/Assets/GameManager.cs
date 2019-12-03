@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public string path;
     public bool isMapSpawned;
+    public int mapSize;
 
-    private static int x = 5, y = 4, z = 4;
+
+    public int x, y, z;
     private List<List<int>> floorList = new List<List<int>>();
 
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject myPrefab;
+    public GameObject myPrefab2;
+    private GameObject Floor;
 
     //private int[, ,] floorList = new int[z, x, y];
     void Awake()
@@ -40,7 +44,24 @@ public class GameManager : MonoBehaviour
 
     void SpawnMap()
     {
-        Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.Euler(90.0f, 0.0f, 0.0f));
+        for(int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                if (Floor != myPrefab)
+                {
+                    Floor = myPrefab;
+                }
+                else
+                {
+                Floor = myPrefab2;
+                }
+                Instantiate(Floor, new Vector3((i * x) - (mapSize), y, (j * z) - (mapSize)), Quaternion.Euler(90.0f, 0.0f, 0.0f));
+            }
+
+        }
+
+
     }
 
 
