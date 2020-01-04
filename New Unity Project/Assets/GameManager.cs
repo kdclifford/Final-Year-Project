@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+
 public class GameManager : MonoBehaviour
 {
     //Creating one instance of Game Manager...Singleton
@@ -12,7 +13,9 @@ public class GameManager : MonoBehaviour
 
 
     public int x, y, z;
-    private List<List<int>> floorList = new List<List<int>>();
+    //private List<List<int>> floorList = new List<List<int>>();
+    //private List<List<GameObject>> floorList = new List<List<GameObject>>();
+    public GameObject[,] floorList;
 
     // Reference to the Prefab. Drag a Prefab into this field in the Inspector.
     public GameObject myPrefab;
@@ -25,12 +28,12 @@ public class GameManager : MonoBehaviour
         MakeSingleton();
     }
     private void MakeSingleton()
-    { 
-    if (instance != null)
+    {
+        if (instance != null)
         {
             Destroy(gameObject);
         }
-    else
+        else
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -38,77 +41,29 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {       
+    {
+        floorList = new GameObject[mapSize, mapSize];
         SpawnMap();
     }
 
     void SpawnMap()
     {
-        for(int i = 0; i < mapSize; i++)
+        for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)
             {
-                if (Floor != myPrefab)
+                if ((j + i) % 2 == 0)
                 {
                     Floor = myPrefab;
                 }
                 else
                 {
-                Floor = myPrefab2;
+                    Floor = myPrefab2;
                 }
-                Instantiate(Floor, new Vector3((i * x) - (mapSize), y, (j * z) - (mapSize)), Quaternion.Euler(90.0f, 0.0f, 0.0f));
+                float tileSize = ((((x + z) / 2) * mapSize) - 3) / 2;
+
+                floorList[i, j] = (GameObject)Instantiate(Floor, new Vector3((i * x) - (tileSize), y, (j * z) - (tileSize)), Quaternion.Euler(90.0f, 0.0f, 0.0f));
             }
-
         }
-
-
     }
-
-
-//    void SpawnMap()
-//    {
-//            int i = 0;
-//            path = Application.dataPath + "/Map" + i + ".txt";
-//        string loadedLine = "";
-//        while (File.Exists(path))
-//        {
-//            StreamReader sReader = new StreamReader(path);
-
-//            // Create File if path isnt found 
-//            if (!File.Exists(path))
-//            {
-//                //break;
-//            }
-//            z = i;
-//            loadedLine = sReader.ReadLine();
-//            x = int.Parse(loadedLine);
-//            loadedLine = sReader.ReadLine();
-//            y = int.Parse(loadedLine);
-
-//            for (int j = 0; j < x; j++)
-//            {
-//                floorList.Add(new List<int>());
-//                loadedLine = sReader.ReadLine();
-//                for (int k = 0; k < y; k++)
-//                {
-//                    //char breakLine = loadedLine[i];
-//                    //floorList[k].Add(loadedLine[k] - '0');
-
-//                    // Instantiate at position (0, 0, 0) and zero rotation.
-//                    Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
-//                }
-//            }
-
-//sReader.Close();
-//            i++;
-
-            
-//        }
-        
-
-
-//    }
-
-
 }

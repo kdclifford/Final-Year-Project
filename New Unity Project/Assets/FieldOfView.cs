@@ -68,7 +68,7 @@ public class FieldOfView : MonoBehaviour
         sizeOfList = visibleTargets.Count;
         DrawFieldOfView();
         TargetInView();
-        AI();
+        //AI();
     }
 
     void FindVisibleTargets()
@@ -254,32 +254,32 @@ public class FieldOfView : MonoBehaviour
     }
 
 
-    void AI()
-    {
+    //void AI()
+    //{
        
-        if (sizeOfList > 0)
-        {
-            //oldRotation = transform.rotation;
-            transform.LookAt(visibleTargets[0].transform);            
-        }
-        else if (playerFootSteps > 0)
-        {
-            for(int i = 0; i < playerFootSteps; i++)
-            {
-                if (playerTargetList.footStepTargets[i].transform == this.transform)
-                {
-                    transform.LookAt(playerObject.transform);                   
-                        coneColour.material = alertColour;
+    //    if (sizeOfList > 0)
+    //    {
+    //        //oldRotation = transform.rotation;
+    //        transform.LookAt(visibleTargets[0].transform);            
+    //    }
+    //    else if (playerFootSteps > 0)
+    //    {
+    //        for(int i = 0; i < playerFootSteps; i++)
+    //        {
+    //            if (playerTargetList.footStepTargets[i].transform == this.transform)
+    //            {
+    //                transform.LookAt(playerObject.transform);                   
+    //                    coneColour.material = alertColour;
                     
                     
-                }
-                else
-                    {
-                        coneColour.material = normalColour;
-                    }
-            }
-        }
-    }
+    //            }
+    //            else
+    //                {
+    //                    coneColour.material = normalColour;
+    //                }
+    //        }
+    //    }
+    //}
 
 }
 

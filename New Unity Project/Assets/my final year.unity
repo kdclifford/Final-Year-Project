@@ -348,7 +348,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5bd4239efc7e4f34fbb235da515a80e0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 1514655817}
   - component: {fileID: 1514655816}
   m_Layer: 0
-  m_Name: Game Manger
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: 
   isMapSpawned: 0
-  mapSize: 10
+  mapSize: 34
   x: 3
   y: 0
   z: 3
@@ -914,6 +914,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1918152592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 743421594386175862, guid: 28474e5729aaeb84399928c322982b23,
+    type: 3}
+  m_PrefabInstance: {fileID: 743421593962334168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1918152593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918152592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d386b151375b5fa47860e920a1a5afde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1918152594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918152592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hi: 4
 --- !u!1001 &743421593962334168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -981,7 +1012,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 743421594386175852, guid: 28474e5729aaeb84399928c322982b23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 28474e5729aaeb84399928c322982b23, type: 3}
 --- !u!1001 &8598601784796443381
 PrefabInstance:
