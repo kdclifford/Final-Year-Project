@@ -33,7 +33,7 @@ public class FieldOfView : MonoBehaviour
 
     Quaternion oldRotation;
     private GameObject playerObject;
-    private FootSteps playerTargetList;
+    public FootSteps playerTargetList;
 
     int playerFootSteps;
     int sizeOfList;
