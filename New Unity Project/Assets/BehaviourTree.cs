@@ -70,16 +70,127 @@ public class Selector : Node
         SetNodeState = NodeState.Failure;
         return GetNodeState;        
     }
+}
 
+//Inverter Node Derived from Parent class node
+public class Inverter : Node
+{
+    /* Child node to evaluate */
+    private Node m_node;
 
+    public Node node
+    {
+        get { return m_node; }
+    }
 
+    /* The constructor requires the child node that this inverter  decorator
+     * wraps*/
+    public Inverter(Node node)
+    {
+        m_node = node;
+    }
 
-
-
+    /* Reports a success if the child fails and
+     * a failure if the child succeeeds. Running will report
+     * as running */
+    public override NodeState TreeStatus()
+    {
+        switch (m_node.TreeStatus())
+        {
+            case NodeState.Failure:
+                SetNodeState = NodeState.Success;
+                return GetNodeState;
+            case NodeState.Success:
+                SetNodeState = NodeState.Failure;
+                return GetNodeState;
+            case NodeState.Running:
+                SetNodeState = NodeState.Running;
+                return GetNodeState;
+        }
+        SetNodeState = NodeState.Success;
+        return GetNodeState;
+    }
 }
 
 
+public class Sequence : Node
+{
+    /** Chiildren nodes that belong to this sequence */
+    private List<Node> m_nodes = new List<Node>();
 
+    /** Must provide an initial set of children nodes to work */
+    public Sequence(List<Node> nodes)
+    {
+        m_nodes = nodes;
+    }
+
+    /* If any child node returns a failure, the entire node fails. Whence all 
+     * nodes return a success, the node reports a success. */
+    public override NodeState TreeStatus()
+    {
+        bool anyChildRunning = false;
+
+        foreach (Node node in m_nodes)
+        {
+            switch (node.TreeStatus())
+            {
+                case NodeState.Failure:
+                    SetNodeState = NodeState.Failure;
+                    return GetNodeState;
+                case NodeState.Success:
+                    continue;
+                case NodeState.Running:
+                    anyChildRunning = true;
+                    continue;
+                default:
+                    SetNodeState = NodeState.Success;
+                    return GetNodeState;
+            }
+        }
+        SetNodeState = anyChildRunning ? NodeState.Running : NodeState.Success;
+        return GetNodeState;
+    }
+}
+
+public class ActionNode : Node
+{
+    /* Method signature for the action. */
+    public delegate NodeState ActionNodeDelegate();
+
+    /* The delegate that is called to evaluate this node */
+    private ActionNodeDelegate m_action;
+
+    /* Because this node contains no logic itself,
+     * the logic must be passed in in the form of 
+     * a delegate. As the signature states, the action
+     * needs to return a NodeStates enum */
+    public ActionNode(ActionNodeDelegate action)
+    {
+        m_action = action;
+    }
+
+    /* Evaluates the node using the passed in delegate and 
+     * reports the resulting state as appropriate */
+    public override NodeState TreeStatus()
+    {
+        switch (m_action())
+        {
+            case NodeState.Success:
+                SetNodeState = NodeState.Success;
+                return GetNodeState;
+            case NodeState.Failure:
+                SetNodeState = NodeState.Failure;
+                return GetNodeState;
+            case NodeState.Running:
+                SetNodeState = NodeState.Running;
+                return GetNodeState;
+            default:
+                SetNodeState = NodeState.Failure;
+                return GetNodeState;
+        }
+    }
+
+}
 
 
 
