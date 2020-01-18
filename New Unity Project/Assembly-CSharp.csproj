@@ -72,6 +72,11 @@
     <Compile Include="Assets\FieldOfView.cs" />
     <Compile Include="Assets\FootSteps.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\MiniMapMove.cs" />
+    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
+    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
+    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
+    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
     <Compile Include="Assets\NodeStates.cs" />
     <Compile Include="Assets\PlayerCamera.cs" />
     <Compile Include="Assets\PlayerMove.cs" />
