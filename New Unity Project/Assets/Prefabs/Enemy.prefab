@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -78,6 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &743421594386175862
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,10 +92,11 @@ GameObject:
   - component: {fileID: 743421594386175850}
   - component: {fileID: 743421594386175849}
   - component: {fileID: 743421594386175848}
-  - component: {fileID: 743421594386175852}
   - component: {fileID: 743421594386175863}
   - component: {fileID: 743421594386175853}
   - component: {fileID: 743421594386175854}
+  - component: {fileID: 6308233058196021203}
+  - component: {fileID: 1232224347460494014}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -138,6 +141,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -162,6 +166,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &743421594386175848
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -175,47 +180,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &743421594386175852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743421594386175862}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ba286341f11c0145a72afc3f485a01b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalInputName: Horizontal
-  verticalInputName: Vertical
-  movementSpeed: 6
-  jumpFallOff:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0011253357
-      value: 0.9979248
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.6977539
-      value: 0.0020332336
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  jumpMultiplier: 10
-  jumpKey: 32
 --- !u!143 &743421594386175863
 CharacterController:
   m_ObjectHideFlags: 0
@@ -278,3 +242,38 @@ MonoBehaviour:
   viewMeshFilter: {fileID: 743421594314519839}
   alertColour: {fileID: 2100000, guid: 19dd52f322722c846aaa04f312097a3b, type: 2}
   normalColour: {fileID: 2100000, guid: eff134691488ae34ca143d6598439934, type: 2}
+  playerTargetList: {fileID: 0}
+--- !u!114 &6308233058196021203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743421594386175862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &1232224347460494014
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743421594386175862}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5000001
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

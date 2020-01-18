@@ -14,8 +14,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public float jumpMultiplier;
     [SerializeField] private KeyCode jumpKey;
 
-
-
     private bool isJumping;
 
     private void Awake()
@@ -63,5 +61,4 @@ public class PlayerMove : MonoBehaviour
         charController.slopeLimit = 45.0f;
         isJumping = false;
     }
-
 }

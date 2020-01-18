@@ -67,6 +67,7 @@
     <Compile Include="Assets\CameraFollow.cs" />
     <Compile Include="Assets\CameraFps.cs" />
     <Compile Include="Assets\CharacterMovement.cs" />
+    <Compile Include="Assets\Defs.cs" />
     <Compile Include="Assets\EnemyVision.cs" />
     <Compile Include="Assets\FieldOfView.cs" />
     <Compile Include="Assets\FootSteps.cs" />
