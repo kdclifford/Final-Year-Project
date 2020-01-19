@@ -92,11 +92,11 @@ GameObject:
   - component: {fileID: 743421594386175850}
   - component: {fileID: 743421594386175849}
   - component: {fileID: 743421594386175848}
-  - component: {fileID: 743421594386175863}
   - component: {fileID: 743421594386175853}
   - component: {fileID: 743421594386175854}
-  - component: {fileID: 6308233058196021203}
   - component: {fileID: 1232224347460494014}
+  - component: {fileID: 1918152593}
+  - component: {fileID: 1918152594}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -180,24 +180,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &743421594386175863
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743421594386175862}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.5000001
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &743421594386175853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -243,18 +225,6 @@ MonoBehaviour:
   alertColour: {fileID: 2100000, guid: 19dd52f322722c846aaa04f312097a3b, type: 2}
   normalColour: {fileID: 2100000, guid: eff134691488ae34ca143d6598439934, type: 2}
   playerTargetList: {fileID: 0}
---- !u!114 &6308233058196021203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743421594386175862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &1232224347460494014
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -277,3 +247,30 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1918152593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743421594386175862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d386b151375b5fa47860e920a1a5afde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1918152594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743421594386175862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLocation: {x: 0, y: 0, z: 0}
+  patrolPts: []
+  currentPatrolPt: 0

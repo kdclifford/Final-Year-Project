@@ -131,14 +131,6 @@ public class CSequenceNode : CNode
 
 
 
-
-
-
-//public class Tree : Node
-//{
-//    public List<Node> WholeTree;
-//}
-
 public class BehaviourTree : MonoBehaviour
 {
     public GameObject[,] Map;
@@ -153,24 +145,27 @@ public class BehaviourTree : MonoBehaviour
     int playerList;
     private List<Transform> visibleTargets = new List<Transform>();
 
-    private Transform targetLocation;
+    public Vector3 targetLocation;
 
-
-
+    public List<GameObject> patrolPts = new List<GameObject>();
 
     CActionNode Hearing;
     CActionNode Sight;
     CActionNode MoveEnemy;
+    CActionNode Movept;
 
 
     CSequenceNode AttackSight;
     CSequenceNode AttackHeard;
+    CSequenceNode patrol;
 
     CSelectorNode Root;
 
 
     Vector3 t;
 
+
+    public int currentPatrolPt;
 
 
 
@@ -184,7 +179,7 @@ public class BehaviourTree : MonoBehaviour
             {
                 if (playerTargetList.footStepTargets[i].transform == this.transform)
                 {
-                    targetLocation = playerObject.transform;
+                    targetLocation = playerObject.transform.position;
                     // Message with a GameObject name.
                     Debug.Log("I Hear the Player " + this.gameObject.name);
 
@@ -201,7 +196,7 @@ public class BehaviourTree : MonoBehaviour
     {
         if (playerList > 0)
         {
-            targetLocation = playerObject.transform;
+            targetLocation = playerObject.transform.position;
             Debug.Log("I see the Player " + this.gameObject.name);
             return ENodeState.Success;
         }
@@ -209,16 +204,36 @@ public class BehaviourTree : MonoBehaviour
     }
 
     ENodeState MoveToPlayer()
-    {        
-        agent.SetDestination(targetLocation.position);
-        if(Def.isPointInsideSphere(transform.position, playerObject.transform.position, 5.0f))
+    {
+       // if (!Def.isPointInsideSphere(transform.position, targetLocation, 10.0f))
+      
+            agent.SetDestination(targetLocation);        
+        
+        return ENodeState.Running;
+    }
+
+    ENodeState MoveToPatrolPt()
+    {
+        while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success)
         {
-            return ENodeState.Success;
+            if (patrolPts.Count > 0)
+            {
+                if (currentPatrolPt >= patrolPts.Count)
+                {
+                    currentPatrolPt = 0;
+                }
+
+                agent.SetDestination(patrolPts[currentPatrolPt].transform.position);
+
+                if (Def.isPointInsideSphere(transform.position, patrolPts[currentPatrolPt].transform.position, 2f))
+                {
+                    currentPatrolPt++;
+                }
+            }
+        return ENodeState.Running;
         }
         return ENodeState.Failure;
     }
-
-
 
 
 
@@ -239,16 +254,17 @@ public class BehaviourTree : MonoBehaviour
         Hearing = new CActionNode(HearThePlayer, "Hearing");
         Sight = new CActionNode(SeeThePlayer, "Sight");
         MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer");
-
+        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint");
 
         List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
         List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy };
+        List<CNode> GoToPatrolPoint = new List<CNode>() { Movept};
 
         AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence");
         AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence");
+        patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence");
 
-
-        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight };
+        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, patrol };
 
         Root = new CSelectorNode(Tree, "Root");
 
