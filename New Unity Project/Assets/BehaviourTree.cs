@@ -7,12 +7,12 @@ using UnityEngine.AI;
 public abstract class CNode
 {
    protected CNode mParent;
+    //protected CNode mCurrentNode;
     private string mNameOfNode;
-  // protected Node mCurrentNode;
    protected ENodeState mCurrentNodeState;
 
 
-    public abstract ENodeState ReturnNode();
+    public abstract ENodeState RunTree();
 
     public string GetName()
     {
@@ -22,6 +22,15 @@ public abstract class CNode
     {
          mNameOfNode = name;
     }
+    public CNode GetParent()
+    {
+        return mParent;
+    }
+    public void SetParent(CNode parent)
+    {
+        mParent = parent;
+    }
+
 
 
 }
@@ -36,21 +45,26 @@ public class CActionNode : CNode
         currentAction = PassedAction;
         SetName(name);
     }
+    
 
-    public override ENodeState ReturnNode()
+    public override ENodeState RunTree()
     {
+            //mCurrentNode = this;
         if(currentAction() == ENodeState.Failure)
         {
+            mCurrentNodeState = ENodeState.Failure;
             Debug.Log("Failure " + GetName());
             return ENodeState.Failure;
         }
         else if (currentAction() == ENodeState.Success)
         {
+            mCurrentNodeState = ENodeState.Success;
             Debug.Log("Success " + GetName());
             return ENodeState.Success;
         }
         else
-        {           
+        {
+            mCurrentNodeState = ENodeState.Running;
             Debug.Log("Running " + GetName());
             return ENodeState.Running;
         }
@@ -67,27 +81,30 @@ public class CSelectorNode : CNode
     }
 
 
-    public override ENodeState ReturnNode()
+    public override ENodeState RunTree()
     {
         foreach(CNode nodes in childNodes)
         {
-            if(nodes.ReturnNode() == ENodeState.Success)
+           // mCurrentNode = nodes;
+            nodes.SetParent(this);
+            if (nodes.RunTree() == ENodeState.Success)
             {
+                mCurrentNodeState = ENodeState.Success;
                 Debug.Log("Success " + nodes.GetName());
                 
                 return ENodeState.Success;
             }
-            else if (nodes.ReturnNode() == ENodeState.Running)
+            else if (nodes.RunTree() == ENodeState.Running)
             {
                 mCurrentNodeState = ENodeState.Running;
-                mParent = this;
+                //mParent = this;
                 Debug.Log("Running " + nodes.GetName());
                 return ENodeState.Running;
             }
 
 
         }
-
+        mCurrentNodeState = ENodeState.Failure;
         return ENodeState.Failure;
     }
 
@@ -103,27 +120,30 @@ public class CSequenceNode : CNode
     }
 
 
-    public override ENodeState ReturnNode()
+    public override ENodeState RunTree()
     {
         foreach (CNode nodes in childNodes)
         {
-            if (nodes.ReturnNode() == ENodeState.Failure)
+            //mCurrentNode = nodes;
+            nodes.SetParent(this);
+            if (nodes.RunTree() == ENodeState.Failure)
             {
+                mCurrentNodeState = ENodeState.Failure;
                 Debug.Log("Failure " + nodes.GetName());
 
                 return ENodeState.Failure;
             }
-            else if (nodes.ReturnNode() == ENodeState.Running)
+            else if (nodes.RunTree() == ENodeState.Running)
             {
                 mCurrentNodeState = ENodeState.Running;
-                mParent = this;
+                //mParent = this;
                 Debug.Log("Running " + nodes.GetName());
                 return ENodeState.Running;
             }
 
 
         }
-
+        mCurrentNodeState = ENodeState.Success;
         return ENodeState.Success;
     }
 
@@ -183,8 +203,6 @@ public class BehaviourTree : MonoBehaviour
                     // Message with a GameObject name.
                     Debug.Log("I Hear the Player " + this.gameObject.name);
 
-                    //transform.LookAt(playerObject.transform);
-                    //coneColour.material = alertColour;
                     return ENodeState.Success;
                 }
             }
@@ -230,7 +248,7 @@ public class BehaviourTree : MonoBehaviour
                     currentPatrolPt++;
                 }
             }
-        return ENodeState.Running;
+            return ENodeState.Running;
         }
         return ENodeState.Failure;
     }
@@ -280,7 +298,7 @@ public class BehaviourTree : MonoBehaviour
         playerList = visibleTargets.Count;
         playerFootSteps = playerTargetList.footStepTargets.Count;
 
-        Root.ReturnNode();
+        Root.RunTree();
 
        // Hearing.ReturnNode();
 
