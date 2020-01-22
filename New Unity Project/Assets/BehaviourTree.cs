@@ -9,10 +9,12 @@ public abstract class CNode
    protected CNode mParent;
     //protected CNode mCurrentNode;
     private string mNameOfNode;
-   protected ENodeState mCurrentNodeState;
+    public ENodeState mCurrentNodeState;
 
 
-    public abstract ENodeState RunTree();
+    //public abstract ENodeState RunTree();
+    public abstract CNode RunTree();
+
 
     public string GetName()
     {
@@ -30,9 +32,6 @@ public abstract class CNode
     {
         mParent = parent;
     }
-
-
-
 }
 
 public class CActionNode : CNode
@@ -44,35 +43,35 @@ public class CActionNode : CNode
     {
         currentAction = PassedAction;
         SetName(name);
-    }
-    
+    }    
 
-    public override ENodeState RunTree()
+    public override CNode RunTree()
     {
-            //mCurrentNode = this;
+           
         if(currentAction() == ENodeState.Failure)
         {
             mCurrentNodeState = ENodeState.Failure;
-            Debug.Log("Failure " + GetName());
-            return ENodeState.Failure;
+            //Debug.Log("Failure " + GetName());
+            return this;
         }
         else if (currentAction() == ENodeState.Success)
         {
             mCurrentNodeState = ENodeState.Success;
-            Debug.Log("Success " + GetName());
-            return ENodeState.Success;
+           // Debug.Log("Success " + GetName());
+            return this;
         }
         else
         {
             mCurrentNodeState = ENodeState.Running;
-            Debug.Log("Running " + GetName());
-            return ENodeState.Running;
+           // Debug.Log("Running " + GetName());
+            return this;
         }
     }
 }
 
 public class CSelectorNode : CNode
 {
+    public CNode mCurrentChildNode;
    public List<CNode> childNodes = new List<CNode>();
     public CSelectorNode( List<CNode> PassedChildNodes, string name)
     {
@@ -80,38 +79,39 @@ public class CSelectorNode : CNode
         SetName(name);
     }
 
-
-    public override ENodeState RunTree()
+    public override CNode RunTree()
     {
-        foreach(CNode nodes in childNodes)
+       // mCurrentNodeState = ENodeState.Running;
+        foreach (CNode nodes in childNodes)
         {
+            mCurrentChildNode = nodes;
+            ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
            // mCurrentNode = nodes;
             nodes.SetParent(this);
-            if (nodes.RunTree() == ENodeState.Success)
+            if (childnodestate == ENodeState.Success)
             {
                 mCurrentNodeState = ENodeState.Success;
                 Debug.Log("Success " + nodes.GetName());
-                
-                return ENodeState.Success;
+
+                return nodes;
             }
-            else if (nodes.RunTree() == ENodeState.Running)
+            else if (childnodestate == ENodeState.Running)
             {
                 mCurrentNodeState = ENodeState.Running;
                 //mParent = this;
                 Debug.Log("Running " + nodes.GetName());
-                return ENodeState.Running;
+                return nodes;
             }
-
-
         }
         mCurrentNodeState = ENodeState.Failure;
-        return ENodeState.Failure;
+        return this;
     }
 
 }
 
 public class CSequenceNode : CNode
 {
+    public CNode mCurrentChildNode;
     public List<CNode> childNodes = new List<CNode>();
     public CSequenceNode(List<CNode> PassedChildNodes, string name)
     {
@@ -120,31 +120,34 @@ public class CSequenceNode : CNode
     }
 
 
-    public override ENodeState RunTree()
+    public override CNode RunTree()
     {
+       // mCurrentNodeState = ENodeState.Running;
         foreach (CNode nodes in childNodes)
         {
+            mCurrentChildNode = nodes;
+            ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
             //mCurrentNode = nodes;
             nodes.SetParent(this);
-            if (nodes.RunTree() == ENodeState.Failure)
+            if (childnodestate == ENodeState.Failure)
             {
                 mCurrentNodeState = ENodeState.Failure;
                 Debug.Log("Failure " + nodes.GetName());
 
-                return ENodeState.Failure;
+                return nodes;
             }
-            else if (nodes.RunTree() == ENodeState.Running)
+            else if (childnodestate == ENodeState.Running)
             {
                 mCurrentNodeState = ENodeState.Running;
                 //mParent = this;
                 Debug.Log("Running " + nodes.GetName());
-                return ENodeState.Running;
+                return nodes;
             }
 
 
         }
         mCurrentNodeState = ENodeState.Success;
-        return ENodeState.Success;
+        return this;
     }
 
 }
@@ -200,9 +203,6 @@ public class BehaviourTree : MonoBehaviour
                 if (playerTargetList.footStepTargets[i].transform == this.transform)
                 {
                     targetLocation = playerObject.transform.position;
-                    // Message with a GameObject name.
-                    Debug.Log("I Hear the Player " + this.gameObject.name);
-
                     return ENodeState.Success;
                 }
             }
@@ -215,7 +215,6 @@ public class BehaviourTree : MonoBehaviour
         if (playerList > 0)
         {
             targetLocation = playerObject.transform.position;
-            Debug.Log("I see the Player " + this.gameObject.name);
             return ENodeState.Success;
         }
         return ENodeState.Failure;
@@ -254,6 +253,53 @@ public class BehaviourTree : MonoBehaviour
     }
 
 
+    void CreateTree()
+    {
+        //tree Stuff
+        Hearing = new CActionNode(HearThePlayer, "Hearing");
+        Sight = new CActionNode(SeeThePlayer, "Sight");
+        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer");
+        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint");
+
+        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
+        List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy };
+        List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
+
+        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence");
+        AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence");
+        patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence");
+
+        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, patrol };
+
+        Root = new CSelectorNode(Tree, "Root");
+    }
+
+    CNode currentnode;
+
+
+    void RunTree()
+    {
+     //   if(currentnode == null)
+     //   {
+     //currentnode = Root.RunTree();
+     //   }
+
+        //else if ( currentnode.mCurrentNodeState == ENodeState.Running)
+        //{
+
+        //}
+        currentnode = Root.RunTree();
+
+
+
+
+    }
+
+
+    //void DisplayCurrentNode()
+    //{
+    //    Debug.Log("oioi " + currentnode.GetName());
+    //}
 
 
     // Start is called before the first frame update
@@ -266,25 +312,9 @@ public class BehaviourTree : MonoBehaviour
         // fieldOfViewAI = gameManager.GetComponent<GameManager>()
         agent = GetComponent<NavMeshAgent>();
 
+        CreateTree();
 
-
-        //tree Stuff
-        Hearing = new CActionNode(HearThePlayer, "Hearing");
-        Sight = new CActionNode(SeeThePlayer, "Sight");
-        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer");
-        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint");
-
-        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
-        List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy };
-        List<CNode> GoToPatrolPoint = new List<CNode>() { Movept};
-
-        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence");
-        AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence");
-        patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence");
-
-        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, patrol };
-
-        Root = new CSelectorNode(Tree, "Root");
+       
 
 
     }
@@ -298,7 +328,12 @@ public class BehaviourTree : MonoBehaviour
         playerList = visibleTargets.Count;
         playerFootSteps = playerTargetList.footStepTargets.Count;
 
-        Root.RunTree();
+       
+        RunTree();
+        //DisplayCurrentNode();
+        
+
+
 
        // Hearing.ReturnNode();
 
