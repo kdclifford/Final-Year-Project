@@ -147,7 +147,7 @@ public class CSequenceNode : CNode
 
         }
         mCurrentNodeState = ENodeState.Success;
-        return this;
+        return mCurrentChildNode;
     }
 
 }
@@ -224,8 +224,14 @@ public class BehaviourTree : MonoBehaviour
     {
        // if (!Def.isPointInsideSphere(transform.position, targetLocation, 10.0f))
       
-            agent.SetDestination(targetLocation);        
-        
+            agent.SetDestination(targetLocation);
+
+        if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 2f))
+        {         
+            return ENodeState.Success;
+        }
+
+
         return ENodeState.Running;
     }
 
@@ -245,6 +251,7 @@ public class BehaviourTree : MonoBehaviour
                 if (Def.isPointInsideSphere(transform.position, patrolPts[currentPatrolPt].transform.position, 2f))
                 {
                     currentPatrolPt++;
+                    //return ENodeState.Success;
                 }
             }
             return ENodeState.Running;
@@ -269,7 +276,7 @@ public class BehaviourTree : MonoBehaviour
         AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence");
         patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence");
 
-        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, patrol };
+        List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, Movept };
 
         Root = new CSelectorNode(Tree, "Root");
     }
@@ -279,17 +286,18 @@ public class BehaviourTree : MonoBehaviour
 
     void RunTree()
     {
-     //   if(currentnode == null)
-     //   {
-     //currentnode = Root.RunTree();
-     //   }
-
-        //else if ( currentnode.mCurrentNodeState == ENodeState.Running)
-        //{
-
-        //}
-        currentnode = Root.RunTree();
-
+        if (currentnode == null)
+        {
+            currentnode = Root.RunTree();
+        }
+        else if (currentnode.mCurrentNodeState == ENodeState.Running)
+        {
+            currentnode = currentnode.GetParent().RunTree();
+        }
+        else
+        {
+            currentnode = Root.RunTree();
+        }
 
 
 
