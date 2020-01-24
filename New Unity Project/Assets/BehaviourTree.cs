@@ -4,6 +4,18 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+
+public class CUI
+{
+    public float xPos = 0f;
+    public float yPos = 0f;
+    public string colour = "";
+    public string NodeName = "";
+    public ENodeState NodeState;
+}
+
+
+
 //Parent Class of All the behaviour tree Nodes
 public abstract class CNode
 {
@@ -12,7 +24,7 @@ public abstract class CNode
     private string mNameOfNode;
     public ENodeState mCurrentNodeState;
     private List<CNode> childrenNodes;
-
+    public CUI nodeUI;
 
     //public abstract ENodeState RunTree();
     public abstract CNode RunTree();
@@ -55,12 +67,13 @@ public class CActionNode : CNode
     {
         currentAction = PassedAction;
         SetName(name);
+        nodeUI = new CUI();
+        nodeUI.NodeName = GetName();
     }    
 
     public override CNode RunTree()
-    {
-           
-        if(currentAction() == ENodeState.Failure)
+    {        
+        if (currentAction() == ENodeState.Failure)
         {
             mCurrentNodeState = ENodeState.Failure;
             //Debug.Log("Failure " + GetName());
@@ -89,8 +102,10 @@ public class CSelectorNode : CNode
     {
         SetChildren(PassedChildNodes);
         SetName(name);
+        nodeUI = new CUI();
+        nodeUI.NodeName = GetName();
 
-        foreach(CNode i in GetChildren())
+        foreach (CNode i in GetChildren())
         {
             i.SetParent(this);
         }
@@ -131,6 +146,8 @@ public class CSequenceNode : CNode
     {
         SetChildren(PassedChildNodes);
         SetName(name);
+        nodeUI = new CUI();
+        nodeUI.NodeName = GetName();
         foreach (CNode i in GetChildren())
         {
             i.SetParent(this);
@@ -201,15 +218,11 @@ public class BehaviourTree : MonoBehaviour
 
     CSelectorNode Root;
 
-
+    List<CNode> AllNodes = new List<CNode>();
     Vector3 t;
 
 
     public int currentPatrolPt;
-
-
-
-
 
     ENodeState HearThePlayer()
     {
@@ -276,6 +289,15 @@ public class BehaviourTree : MonoBehaviour
         return ENodeState.Failure;
     }
 
+    //CNode createNode()
+    //{
+    //    List<CNode> i = new List<CNode>();
+    //    CSelectorNode Root = new CSelectorNode(i, "Root");
+    //    return Root;
+    //}
+
+
+
 
     void CreateTree()
     {
@@ -296,6 +318,34 @@ public class BehaviourTree : MonoBehaviour
         List<CNode> Tree = new List<CNode>() { AttackHeard, AttackSight, Movept };
 
         Root = new CSelectorNode(Tree, "Root");
+
+        AllNodes.Add(Root);
+        AllNodes.Add(patrol);
+        AllNodes.Add(AttackHeard);
+        AllNodes.Add(AttackSight);
+
+        //foreach (CNode i in AllNodes)
+        //{
+        //    foreach (CNode childNodes in i.GetChildren())
+        //    {
+
+
+
+
+        //        childNodes.nodeUI.xPos = i.nodeUI.xPos + 100;
+
+
+
+
+        //    }
+        //}
+
+
+
+        //AllNodes.Add(Movept);
+        //AllNodes.Add(MoveEnemy);
+        //AllNodes.Add(Sight);
+        //AllNodes.Add(Hearing);
     }
 
     CNode currentnode;
@@ -306,7 +356,7 @@ public class BehaviourTree : MonoBehaviour
         if (currentnode == null)
         {
             currentnode = Root.RunTree();
-            //SpawnNodeUI(Root);
+            SpawnNodeUI(currentnode);
         }
         else if (currentnode.mCurrentNodeState == ENodeState.Running)
         {
@@ -318,7 +368,7 @@ public class BehaviourTree : MonoBehaviour
         }
 
 
-        SpawnNodeUI(currentnode);
+       // SpawnNodeUI(currentnode);
 
 
 
@@ -327,14 +377,15 @@ public class BehaviourTree : MonoBehaviour
     }
 
     public GameObject myPrefab;
-    public GameObject NodeListUI;
-    public GameObject NodeTitle;
-    public GameObject NodeState;
+    private GameObject NodeListUI;
+    private GameObject NodeTitle;
+    private GameObject NodeState;
     //public GameObject NodeListUI;
     //public text myPrefab;
 
     private Text nodetext;
     private Text state;
+    private RawImage colourImg;
 
     void SpawnNodeUI(CNode spwanNodeUi)
     {
@@ -356,41 +407,44 @@ public class BehaviourTree : MonoBehaviour
 
 
         //}
+        NodeTitle = myPrefab.transform.GetChild(0).gameObject;
+        NodeTitle.transform.localPosition = new Vector2(-500, 0);
+        // NodeState = myPrefab.transform.GetChild(1).gameObject;
+        colourImg = NodeTitle.GetComponent<RawImage>();
 
-        string nodeStateText = "";
+        //colour.color = Color.black;
+        //string nodeStateText = "";
         if (spwanNodeUi.mCurrentNodeState == ENodeState.Success)
         {
-            nodeStateText = "Success";
+            colourImg.color = Color.green;
         }
         else if (spwanNodeUi.mCurrentNodeState == ENodeState.Failure)
         {
-            nodeStateText = "Failure";
+            colourImg.color = Color.red;
         }
         else if (spwanNodeUi.mCurrentNodeState == ENodeState.Running)
         {
-            nodeStateText = "Running";
+            colourImg.color = Color.yellow;
         }
 
 
-
-
-        NodeTitle = myPrefab.transform.GetChild(1).GetChild(1).gameObject;
-        NodeState = myPrefab.transform.GetChild(1).GetChild(2).gameObject;
+        NodeTitle = myPrefab.transform.GetChild(0).GetChild(0).gameObject;
         nodetext = NodeTitle.GetComponent<Text>();
-        nodetext.text = "Node: " + spwanNodeUi.GetName();
+       // nodetext.text = "Node: " + spwanNodeUi.GetName();
 
-        nodetext = NodeState.GetComponent<Text>();
-        nodetext.text = "State: " + nodeStateText;
+        //nodetext = NodeState.GetComponent<Text>();
+        nodetext.text = spwanNodeUi.GetName();
         //NodeTitle.t.position = new Vector3(110, 110, 110);
 
-        NodeListUI = (GameObject)Instantiate(myPrefab, new Vector3(100,0,100), Quaternion.Euler(0.0f, 0.0f, 0.0f));        
+        NodeListUI = (GameObject)Instantiate(myPrefab, new Vector3(0,0,0), Quaternion.Euler(0.0f, 0.0f, 0.0f));        
+
     }
 
 
-    //void DisplayCurrentNode()
-    //{
-    //    Debug.Log("oioi " + currentnode.GetName());
-    //}
+    void DisplayCurrentNode()
+    {
+        Debug.Log("oioi " + currentnode.GetName());
+    }
 
 
     // Start is called before the first frame update
@@ -421,7 +475,8 @@ public class BehaviourTree : MonoBehaviour
 
        
         RunTree();
-        //DisplayCurrentNode();
+        
+       // DisplayCurrentNode();
         
 
 
