@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 //Parent Class of All the behaviour tree Nodes
 public abstract class CNode
@@ -10,6 +11,7 @@ public abstract class CNode
     //protected CNode mCurrentNode;
     private string mNameOfNode;
     public ENodeState mCurrentNodeState;
+    private List<CNode> childrenNodes;
 
 
     //public abstract ENodeState RunTree();
@@ -32,6 +34,16 @@ public abstract class CNode
     {
         mParent = parent;
     }
+
+    public List<CNode> GetChildren()
+    {
+        return childrenNodes;
+    }
+    public void SetChildren(List<CNode> children)
+    {
+        childrenNodes = children;
+    }
+
 }
 
 public class CActionNode : CNode
@@ -72,22 +84,25 @@ public class CActionNode : CNode
 public class CSelectorNode : CNode
 {
     public CNode mCurrentChildNode;
-   public List<CNode> childNodes = new List<CNode>();
+   //public List<CNode> childNodes = new List<CNode>();
     public CSelectorNode( List<CNode> PassedChildNodes, string name)
     {
-        childNodes = PassedChildNodes;
+        SetChildren(PassedChildNodes);
         SetName(name);
+
+        foreach(CNode i in GetChildren())
+        {
+            i.SetParent(this);
+        }
     }
 
     public override CNode RunTree()
     {
-       // mCurrentNodeState = ENodeState.Running;
-        foreach (CNode nodes in childNodes)
+        foreach (CNode nodes in GetChildren())
         {
             mCurrentChildNode = nodes;
             ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
-           // mCurrentNode = nodes;
-            nodes.SetParent(this);
+           
             if (childnodestate == ENodeState.Success)
             {
                 mCurrentNodeState = ENodeState.Success;
@@ -98,7 +113,6 @@ public class CSelectorNode : CNode
             else if (childnodestate == ENodeState.Running)
             {
                 mCurrentNodeState = ENodeState.Running;
-                //mParent = this;
                 Debug.Log("Running " + nodes.GetName());
                 return nodes;
             }
@@ -112,23 +126,26 @@ public class CSelectorNode : CNode
 public class CSequenceNode : CNode
 {
     public CNode mCurrentChildNode;
-    public List<CNode> childNodes = new List<CNode>();
+    //public List<CNode> childNodes = new List<CNode>();
     public CSequenceNode(List<CNode> PassedChildNodes, string name)
     {
-        childNodes = PassedChildNodes;
+        SetChildren(PassedChildNodes);
         SetName(name);
+        foreach (CNode i in GetChildren())
+        {
+            i.SetParent(this);
+        }
     }
 
 
     public override CNode RunTree()
     {
        // mCurrentNodeState = ENodeState.Running;
-        foreach (CNode nodes in childNodes)
+        foreach (CNode nodes in GetChildren())
         {
             mCurrentChildNode = nodes;
-            ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
-            //mCurrentNode = nodes;
-            nodes.SetParent(this);
+            ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;      
+            //SpawnNodeUI(Root);
             if (childnodestate == ENodeState.Failure)
             {
                 mCurrentNodeState = ENodeState.Failure;
@@ -289,6 +306,7 @@ public class BehaviourTree : MonoBehaviour
         if (currentnode == null)
         {
             currentnode = Root.RunTree();
+            //SpawnNodeUI(Root);
         }
         else if (currentnode.mCurrentNodeState == ENodeState.Running)
         {
@@ -300,7 +318,72 @@ public class BehaviourTree : MonoBehaviour
         }
 
 
+        SpawnNodeUI(currentnode);
 
+
+
+
+
+    }
+
+    public GameObject myPrefab;
+    public GameObject NodeListUI;
+    public GameObject NodeTitle;
+    public GameObject NodeState;
+    //public GameObject NodeListUI;
+    //public text myPrefab;
+
+    private Text nodetext;
+    private Text state;
+
+    void SpawnNodeUI(CNode spwanNodeUi)
+    {
+        //CNode parent = tree;
+
+        //while (parent.GetChildren() != null)
+        //{
+        //    foreach(CNode nodes in parent.GetChildren())
+        //    {
+
+
+
+
+
+        //    }
+
+        //   // NodeListUI[i] = (GameObject)Instantiate(myPrefab, new Vector3(100, 100, 0), Quaternion.Euler(0.0f, 0.0f, 0.0f));
+
+
+
+        //}
+
+        string nodeStateText = "";
+        if (spwanNodeUi.mCurrentNodeState == ENodeState.Success)
+        {
+            nodeStateText = "Success";
+        }
+        else if (spwanNodeUi.mCurrentNodeState == ENodeState.Failure)
+        {
+            nodeStateText = "Failure";
+        }
+        else if (spwanNodeUi.mCurrentNodeState == ENodeState.Running)
+        {
+            nodeStateText = "Running";
+        }
+
+
+
+
+        NodeTitle = myPrefab.transform.GetChild(1).GetChild(1).gameObject;
+        NodeState = myPrefab.transform.GetChild(1).GetChild(2).gameObject;
+        nodetext = NodeTitle.GetComponent<Text>();
+        nodetext.text = "Node: " + spwanNodeUi.GetName();
+
+        nodetext = NodeState.GetComponent<Text>();
+        nodetext.text = "State: " + nodeStateText;
+        //NodeTitle.t.position = new Vector3(110, 110, 110);
+
+        NodeListUI = (GameObject)Instantiate(myPrefab, new Vector3(100,0,100), Quaternion.Euler(0.0f, 0.0f, 0.0f));        
     }
 
 
