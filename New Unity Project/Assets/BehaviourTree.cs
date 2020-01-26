@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CUI
 {
-    public float xPos = -500f;
+    public float xPos = 0f;
     public float yPos = 0f;
     public string colour = "";
     public string NodeName = "";
@@ -37,8 +37,8 @@ public class BehaviourTree : MonoBehaviour
     CActionNode Hearing;
     CActionNode Sight;
     CActionNode MoveEnemy;
+    CActionNode MoveEnemy2;
     CActionNode Movept;
-
 
     CSequenceNode AttackSight;
     CSequenceNode AttackHeard;
@@ -123,72 +123,68 @@ public class BehaviourTree : MonoBehaviour
     void CreateTree()
     {
         //tree Stuff
-       // Hearing = new CActionNode(HearThePlayer, "Hearing", myPrefab);
-        Sight = new CActionNode(SeeThePlayer, "Sight", myPrefab);
-        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab);
-      //  Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab);
+        Hearing = new CActionNode(HearThePlayer, "Hearing", myPrefab, new Vector2(-100f, 0f));
+        Sight = new CActionNode(SeeThePlayer, "Sight", myPrefab, new Vector2(-450f, 0f));
+        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(-280f, 0f));
+        MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(100f, 0f));
+        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab, new Vector2(350f, 100f));
+        
 
         List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
-       // List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy };
-        //List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
+        List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy2 };
+       // List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
 
-        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence", myPrefab);
-        //AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence", myPrefab);
-       // patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence", myPrefab);
+        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence", myPrefab, new Vector2(-350f, 100f));
+        AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence", myPrefab, new Vector2(0f, 100f));
+       // patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence", myPrefab, new Vector2(350f, 100f));
 
-        List<CNode> Tree = new List<CNode>() { AttackSight /*, AttackHeard, Movept */};
+        List<CNode> Tree = new List<CNode>() { AttackSight , AttackHeard, Movept};
 
-        Root = new CSelectorNode(Tree, "Root", myPrefab);
+        Root = new CSelectorNode(Tree, "Root", myPrefab, new Vector2( 0f , 200f));
 
         AllNodes.Add(Root);
-      //  AllNodes.Add(patrol);
-      //  AllNodes.Add(AttackHeard);
+       // AllNodes.Add(patrol);
+        AllNodes.Add(AttackHeard);
         AllNodes.Add(AttackSight);
-
-        foreach(CNode i in AllNodes)
-        {
-            foreach(CNode j in i.GetChildren())
-            {
-                j.nodeUI.xPos = i.nodeUI.xPos + 100;
-                j.nodeUI.yPos = i.nodeUI.yPos + 100;
-                GameObject temp;
-
-                temp = j.mPrefab.transform.GetChild(0).gameObject;
-                temp.transform.localPosition = new Vector2(j.nodeUI.xPos, j.nodeUI.yPos);  
-            }
-        }
+        AllNodes.Add(Movept);
+        AllNodes.Add(MoveEnemy);
+        AllNodes.Add(MoveEnemy2);
+        AllNodes.Add(Sight);
+        AllNodes.Add(Hearing);       
     }
 
     CNode currentnode;
-
+    bool showHud = false;
 
     void RunTree()
     {
+        foreach (CNode i in AllNodes)
+        {
+            i.ResetTreeStates();
+            i.UpdatePrefab();
+            if(showHud)
+            {
+                i.mPrefab.SetActive(true);
+            }
+            else
+            {
+                i.mPrefab.SetActive(false);
+            }
+        }
         if (currentnode == null)
         {
             currentnode = Root.RunTree();
            //Def.SpawnNodeUI(currentnode, myPrefab);
         }
-        //else if (currentnode.mCurrentNodeState == ENodeState.Running)
-        //{
-        //    currentnode = currentnode.GetParent().RunTree();
-        //}
+        else if (currentnode.mCurrentNodeState == ENodeState.Running)
+        {
+            currentnode = currentnode.GetParent().RunTree();
+        }
         else
         {
             currentnode = Root.RunTree();
         }
-        currentnode.UpdatePrefab();
-
-      // SpawnNodeUI(currentnode, myPrefab);
-
-
-
-
-
-    }
-
-
-   
+    }  
 
     //void DisplayCurrentNode()
     //{
@@ -207,10 +203,6 @@ public class BehaviourTree : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         CreateTree();
-
-       
-
-
     }
 
     // Update is called once per frame
@@ -228,8 +220,10 @@ public class BehaviourTree : MonoBehaviour
        // DisplayCurrentNode();
         
 
-
-
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            showHud = !showHud;
+        }
        // Hearing.ReturnNode();
 
 

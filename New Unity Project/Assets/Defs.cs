@@ -23,9 +23,10 @@ public class Def
     RawImage colourImg;
 
 
+       
 
     NodeTitle = myPrefab.transform.GetChild(0).gameObject;
-        NodeTitle.transform.localPosition = new Vector2(spwanNodeUi.nodeUI.xPos, spwanNodeUi.nodeUI.yPos);
+        
         
         colourImg = NodeTitle.GetComponent<RawImage>();
 
@@ -51,52 +52,56 @@ public class Def
         nodetext.text = spwanNodeUi.GetName();
 
         NodeListUI = GameObject.Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        NodeTitle = NodeListUI.transform.GetChild(0).gameObject;
+
+
+        NodeTitle.transform.localPosition = new Vector2(spwanNodeUi.nodeUI.xPos, spwanNodeUi.nodeUI.yPos);
         return NodeListUI;
     }
 
-    public static void UpdateNodeUI(CNode spwanNodeUi, GameObject myPrefab)
-    {   
-        GameObject NodeListUI;
-        GameObject NodeTitle;       
+    //public static void UpdateNodeUI(CNode spwanNodeUi, GameObject myPrefab)
+    //{   
+    //    GameObject NodeListUI;
+    //    GameObject NodeTitle;       
 
-        Text nodetext;
-        //private Text state;
-        RawImage colourImg;
-
-
-
-        NodeTitle = myPrefab.transform.GetChild(0).gameObject;
-        NodeTitle.transform.localPosition = new Vector2(-500, 0);
-        // NodeState = myPrefab.transform.GetChild(1).gameObject;
-        colourImg = NodeTitle.GetComponent<RawImage>();
-
-        //colour.color = Color.black;
-        //string nodeStateText = "";
-        if (spwanNodeUi.mCurrentNodeState == ENodeState.Success)
-        {
-            colourImg.color = Color.green;
-        }
-        else if (spwanNodeUi.mCurrentNodeState == ENodeState.Failure)
-        {
-            colourImg.color = Color.red;
-        }
-        else if (spwanNodeUi.mCurrentNodeState == ENodeState.Running)
-        {
-            colourImg.color = Color.yellow;
-        }
+    //    Text nodetext;
+    //    //private Text state;
+    //    RawImage colourImg;
 
 
-        NodeTitle = myPrefab.transform.GetChild(0).GetChild(0).gameObject;
-        nodetext = NodeTitle.GetComponent<Text>();
-        // nodetext.text = "Node: " + spwanNodeUi.GetName();
 
-        //nodetext = NodeState.GetComponent<Text>();
-        nodetext.text = spwanNodeUi.GetName();
-        //NodeTitle.t.position = new Vector3(110, 110, 110);
+    //    NodeTitle = myPrefab.transform.GetChild(0).gameObject;
+    //    NodeTitle.transform.localPosition = new Vector2(-500, 0);
+    //    // NodeState = myPrefab.transform.GetChild(1).gameObject;
+    //    colourImg = NodeTitle.GetComponent<RawImage>();
 
-        NodeListUI = GameObject.Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0.0f, 0.0f, 0.0f));
+    //    //colour.color = Color.black;
+    //    //string nodeStateText = "";
+    //    if (spwanNodeUi.mCurrentNodeState == ENodeState.Success)
+    //    {
+    //        colourImg.color = Color.green;
+    //    }
+    //    else if (spwanNodeUi.mCurrentNodeState == ENodeState.Failure)
+    //    {
+    //        colourImg.color = Color.red;
+    //    }
+    //    else if (spwanNodeUi.mCurrentNodeState == ENodeState.Running)
+    //    {
+    //        colourImg.color = Color.yellow;
+    //    }
 
-    }
+
+    //    NodeTitle = myPrefab.transform.GetChild(0).GetChild(0).gameObject;
+    //    nodetext = NodeTitle.GetComponent<Text>();
+    //    // nodetext.text = "Node: " + spwanNodeUi.GetName();
+
+    //    //nodetext = NodeState.GetComponent<Text>();
+    //    nodetext.text = spwanNodeUi.GetName();
+    //    //NodeTitle.t.position = new Vector3(110, 110, 110);
+
+    //    NodeListUI = GameObject.Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.Euler(0.0f, 0.0f, 0.0f));
+
+    //}
 
 
 
