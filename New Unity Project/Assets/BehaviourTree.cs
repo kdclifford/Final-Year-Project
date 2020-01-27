@@ -31,7 +31,7 @@ public class BehaviourTree : MonoBehaviour
     public Vector3 targetLocation;
 
     public List<GameObject> patrolPts = new List<GameObject>();
-
+    public PlayerStats playerHealth; 
     public GameObject myPrefab;
 
     CActionNode Hearing;
@@ -39,7 +39,7 @@ public class BehaviourTree : MonoBehaviour
     CActionNode MoveEnemy;
     CActionNode MoveEnemy2;
     CActionNode Movept;
-
+    CActionNode AttackThePlayer;
     CSequenceNode AttackSight;
     CSequenceNode AttackHeard;
     CSequenceNode patrol;
@@ -118,6 +118,23 @@ public class BehaviourTree : MonoBehaviour
         return ENodeState.Failure;
     }
 
+
+    ENodeState AttackPlayer()
+    {
+        if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 3f))
+        {
+            playerHealth.currentHealth -= 10f;
+            return ENodeState.Success;
+        }
+        return ENodeState.Failure;
+
+    }
+
+
+
+
+
+
     void CreateTree()
     {
         //tree Stuff
@@ -126,9 +143,10 @@ public class BehaviourTree : MonoBehaviour
         MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(-280f, 0f));
         MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(100f, 0f));
         Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab, new Vector2(350f, 100f));
+        AttackThePlayer = new CActionNode(AttackPlayer, "AttackThePlayer", myPrefab, new Vector2(-350, -50));
 
 
-        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
+        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy, AttackThePlayer };
         List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy2 };
         List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
 
@@ -149,6 +167,7 @@ public class BehaviourTree : MonoBehaviour
         AllNodes.Add(MoveEnemy2);
         AllNodes.Add(Sight);
         AllNodes.Add(Hearing);
+        AllNodes.Add(AttackThePlayer);
     }
 
     CNode currentnode;
@@ -202,7 +221,7 @@ public class BehaviourTree : MonoBehaviour
         //gameManager = GameObject.FindGameObjectWithTag("Game Manager");
         //Map = gameManager.GetComponent<GameManager>().floorList;
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        // fieldOfViewAI = gameManager.GetComponent<GameManager>()
+  playerHealth = playerObject.GetComponent<PlayerStats>();
         agent = GetComponent<NavMeshAgent>();
 
         CreateTree();

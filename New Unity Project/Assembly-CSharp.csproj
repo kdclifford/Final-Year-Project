@@ -80,6 +80,7 @@
     <Compile Include="Assets\NodeStates.cs" />
     <Compile Include="Assets\PlayerCamera.cs" />
     <Compile Include="Assets\PlayerMove.cs" />
+    <Compile Include="Assets\PlayerStats.cs" />
     <None Include="Assets\Map1.txt" />
     <None Include="Assets\Map0.txt" />
     <Reference Include="Unity.Timeline.Editor">
