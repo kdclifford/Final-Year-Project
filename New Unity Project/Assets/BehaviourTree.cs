@@ -23,7 +23,7 @@ public class BehaviourTree : MonoBehaviour
     private FieldOfView fieldOfViewAI;
     private FootSteps playerTargetList;
     NavMeshAgent agent;
-    
+
     int playerFootSteps;
     int playerList;
     private List<Transform> visibleTargets = new List<Transform>();
@@ -80,17 +80,18 @@ public class BehaviourTree : MonoBehaviour
 
     ENodeState MoveToPlayer()
     {
-       // if (!Def.isPointInsideSphere(transform.position, targetLocation, 10.0f))
-      
-            agent.SetDestination(targetLocation);
+        // if (!Def.isPointInsideSphere(transform.position, targetLocation, 10.0f))
 
-        if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 2f))
-        {         
+        HearThePlayer();
+        SeeThePlayer();
+        agent.SetDestination(targetLocation);
+
+        if (Def.isPointInsideSphere(transform.position, targetLocation, 3f))
+        {
             return ENodeState.Success;
         }
-
-
         return ENodeState.Running;
+
     }
 
     ENodeState MoveToPatrolPt()
@@ -106,7 +107,7 @@ public class BehaviourTree : MonoBehaviour
 
                 agent.SetDestination(patrolPts[currentPatrolPt].transform.position);
 
-                if (Def.isPointInsideSphere(transform.position, patrolPts[currentPatrolPt].transform.position, 2f))
+                if (Def.isPointInsideSphere(transform.position, patrolPts[currentPatrolPt].transform.position, 3f))
                 {
                     currentPatrolPt++;
                     return ENodeState.Success;
@@ -116,9 +117,6 @@ public class BehaviourTree : MonoBehaviour
         }
         return ENodeState.Failure;
     }
-     
-
-
 
     void CreateTree()
     {
@@ -128,29 +126,29 @@ public class BehaviourTree : MonoBehaviour
         MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(-280f, 0f));
         MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(100f, 0f));
         Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab, new Vector2(350f, 100f));
-        
+
 
         List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy };
         List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy2 };
-       // List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
+        List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
 
         AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence", myPrefab, new Vector2(-350f, 100f));
         AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence", myPrefab, new Vector2(0f, 100f));
-       // patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence", myPrefab, new Vector2(350f, 100f));
+        // patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence", myPrefab, new Vector2(350f, 100f));
 
-        List<CNode> Tree = new List<CNode>() { AttackSight , AttackHeard, Movept};
+        List<CNode> Tree = new List<CNode>() { AttackSight, AttackHeard, Movept };
 
-        Root = new CSelectorNode(Tree, "Root", myPrefab, new Vector2( 0f , 200f));
+        Root = new CSelectorNode(Tree, "Root", myPrefab, new Vector2(0f, 200f));
 
         AllNodes.Add(Root);
-       // AllNodes.Add(patrol);
+        // AllNodes.Add(patrol);
         AllNodes.Add(AttackHeard);
         AllNodes.Add(AttackSight);
         AllNodes.Add(Movept);
         AllNodes.Add(MoveEnemy);
         AllNodes.Add(MoveEnemy2);
         AllNodes.Add(Sight);
-        AllNodes.Add(Hearing);       
+        AllNodes.Add(Hearing);
     }
 
     CNode currentnode;
@@ -160,9 +158,9 @@ public class BehaviourTree : MonoBehaviour
     {
         foreach (CNode i in AllNodes)
         {
-            i.ResetTreeStates();
-            i.UpdatePrefab();
-            if(showHud)
+            //i.ResetTreeStates();
+            //i.UpdatePrefab();
+            if (showHud)
             {
                 i.mPrefab.SetActive(true);
             }
@@ -174,17 +172,22 @@ public class BehaviourTree : MonoBehaviour
         if (currentnode == null)
         {
             currentnode = Root.RunTree();
-           //Def.SpawnNodeUI(currentnode, myPrefab);
+            //Def.SpawnNodeUI(currentnode, myPrefab);
         }
         else if (currentnode.mCurrentNodeState == ENodeState.Running)
         {
-            currentnode = currentnode.GetParent().RunTree();
+            currentnode = currentnode.RunTree();
         }
-        else
+        else if (currentnode.mCurrentNodeState == ENodeState.Failure || currentnode.mCurrentNodeState == ENodeState.Success)
         {
+            foreach (CNode i in AllNodes)
+            {
+                i.ResetTreeStates();
+                i.UpdatePrefab();
+            }
             currentnode = Root.RunTree();
         }
-    }  
+    }
 
     //void DisplayCurrentNode()
     //{
@@ -214,17 +217,17 @@ public class BehaviourTree : MonoBehaviour
         playerList = visibleTargets.Count;
         playerFootSteps = playerTargetList.footStepTargets.Count;
 
-       
-        RunTree();
-        
-       // DisplayCurrentNode();
-        
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        RunTree();
+
+        // DisplayCurrentNode();
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             showHud = !showHud;
         }
-       // Hearing.ReturnNode();
+        // Hearing.ReturnNode();
 
 
     }

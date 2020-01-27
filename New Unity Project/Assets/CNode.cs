@@ -9,7 +9,7 @@ public abstract class CNode
 {
     protected CNode mParent;
     private string mNameOfNode;
-    public ENodeState mCurrentNodeState;
+    public ENodeState mCurrentNodeState = ENodeState.Failure;
     private List<CNode> childrenNodes;
     public CUI nodeUI;
     public GameObject mPrefab;
@@ -21,7 +21,7 @@ public abstract class CNode
     {
         GameObject colourTemp;
         RawImage newColour;
-        colourTemp = mPrefab.transform.GetChild(0).gameObject;   
+        colourTemp = mPrefab.transform.GetChild(0).gameObject;
 
         newColour = colourTemp.GetComponent<RawImage>();
 
@@ -102,16 +102,16 @@ public class CActionNode : CNode
         mCurrentNodeState = currentAction();
         UpdatePrefab();
         if (mCurrentNodeState == ENodeState.Failure)
-        {              
+        {
             return this;
         }
         else if (mCurrentNodeState == ENodeState.Success)
-        {           
+        {
             return this;
         }
         else
         {
-            mCurrentNodeState = ENodeState.Running;           
+            mCurrentNodeState = ENodeState.Running;
             return this;
         }
     }
@@ -136,7 +136,7 @@ public class CSelectorNode : CNode
         foreach (CNode i in GetChildren())
         {
             i.SetParent(this);
-           // i.nodeUI.xPos = nodeUI.xPos + 10;
+            // i.nodeUI.xPos = nodeUI.xPos + 10;
         }
     }
 
@@ -148,7 +148,7 @@ public class CSelectorNode : CNode
         {
             mCurrentChildNode = nodes;
             ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
-           
+
             if (childnodestate == ENodeState.Success)
             {
                 mCurrentNodeState = ENodeState.Success;
@@ -158,7 +158,7 @@ public class CSelectorNode : CNode
             }
             else if (childnodestate == ENodeState.Running)
             {
-               // mCurrentNodeState = ENodeState.Running;
+                // mCurrentNodeState = ENodeState.Running;
                 Debug.Log("Running " + nodes.GetName());
                 UpdatePrefab();
                 return nodes;
@@ -194,13 +194,13 @@ public class CSequenceNode : CNode
 
     public override CNode RunTree()
     {
-            mCurrentNodeState = ENodeState.Running;
+        mCurrentNodeState = ENodeState.Running;
         UpdatePrefab();
         foreach (CNode nodes in GetChildren())
         {
             mCurrentChildNode = nodes;
             ENodeState childnodestate = nodes.RunTree().mCurrentNodeState;
-            
+
             if (childnodestate == ENodeState.Failure)
             {
                 mCurrentNodeState = ENodeState.Failure;
@@ -209,7 +209,7 @@ public class CSequenceNode : CNode
                 return nodes;
             }
             else if (childnodestate == ENodeState.Running)
-            {           
+            {
                 Debug.Log("Running " + nodes.GetName());
                 mCurrentNodeState = ENodeState.Running;
                 UpdatePrefab();
