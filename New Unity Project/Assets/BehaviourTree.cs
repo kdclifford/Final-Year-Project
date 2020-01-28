@@ -112,6 +112,9 @@ public class BehaviourTree : MonoBehaviour
                     currentPatrolPt++;
                     return ENodeState.Success;
                 }
+
+
+
             }
             return ENodeState.Running;
         }

@@ -14,13 +14,13 @@ public class FootSteps : MonoBehaviour
     private float soundAngle = 360;
     public float soundSpeed;
     [Range(0, 1)]
-    public float t;
+    private float t;
     [Range(0, 1)]
-    public float q;
+    private float q;
     [Range(0, 1)]
-    public float p;
+    private float p;
     [Range(0, 1)]
-    public float w;
+    private float w;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
