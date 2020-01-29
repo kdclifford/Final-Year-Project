@@ -222,3 +222,44 @@ public class CSequenceNode : CNode
     }
 
 }
+
+public class CTimerNode : CNode
+{
+    public delegate ENodeState mAction();
+    CNode child;
+    public float timer;
+
+    public CTimerNode(CNode childNode , string name, GameObject Prefab, Vector2 pos)
+    {
+        child = childNode;
+        SetName(name);
+        nodeUI = new CUI();
+        nodeUI.NodeName = GetName();
+        nodeUI.xPos = pos.x;
+        nodeUI.yPos = pos.y;
+        mPrefab = Prefab;
+        mPrefab = Def.SpawnNodeUI(this, mPrefab);
+        mPrefab.SetActive(false);
+        timer = Time.time;
+    }
+
+    public override CNode RunTree()
+    {
+        if(timer + 5f  < Time.time)
+        {
+            timer = Time.time;
+
+            child.RunTree();
+            mCurrentNodeState = ENodeState.Success;
+            UpdatePrefab();
+            return child;
+        }
+
+
+
+
+        mCurrentNodeState = ENodeState.Failure;
+        UpdatePrefab();
+        return this;
+    }
+}

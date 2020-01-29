@@ -101,7 +101,7 @@ public class FootSteps : MonoBehaviour
             isJumping = true;
         }
 
-        
+        //animation.SetInteger("Animation", 7);
 
         if (Input.GetKey(forward) | Input.GetKey(back) | Input.GetKey(left) | Input.GetKey(right))
         {
@@ -124,7 +124,7 @@ public class FootSteps : MonoBehaviour
                     //currentRadius = currentRadius * (1 - w) + crouchRadius * w;
                     soundRadius = soundRadius * (1 - w) + crouchRadius * w;
                 }
-                else if (Input.GetKey(sprint))
+                else if (Input.GetKey(sprint) && !Input.GetKey(back))
                 {                    
                     animation.SetInteger("Animation", 2);                    
                     q = 0.0f;
@@ -151,6 +151,11 @@ public class FootSteps : MonoBehaviour
                     soundRadius = soundRadius * (1 - q) + normalRadius * q;
                     
                 }
+
+                if(Input.GetKey(back))
+                {
+                    animation.SetInteger("Animation", 6);
+                }               
 
             }
             else

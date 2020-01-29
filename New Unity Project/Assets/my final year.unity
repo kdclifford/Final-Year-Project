@@ -2617,6 +2617,11 @@ PrefabInstance:
       propertyPath: HealthBar
       value: 
       objectReference: {fileID: 1298746134}
+    - target: {fileID: 6370104655126600798, guid: f893a5c96c7b89946bea78d2da0b2e96,
+        type: 3}
+      propertyPath: animation
+      value: 
+      objectReference: {fileID: 1754558000}
     - target: {fileID: 8067101314409677401, guid: f893a5c96c7b89946bea78d2da0b2e96,
         type: 3}
       propertyPath: movementSpeed
@@ -3360,6 +3365,11 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.024620503
       objectReference: {fileID: 0}
+    - target: {fileID: 5755028546085935372, guid: 5242bf5bba25a6f479d9f2edac47fd39,
+        type: 3}
+      propertyPath: m_Height
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5755028546085935373, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
       propertyPath: TreeList
@@ -3390,6 +3400,11 @@ PrefabInstance:
       propertyPath: myPrefab
       value: 
       objectReference: {fileID: 312727849}
+    - target: {fileID: 5755028546085935373, guid: 5242bf5bba25a6f479d9f2edac47fd39,
+        type: 3}
+      propertyPath: playerAnimation
+      value: 
+      objectReference: {fileID: 1754558000}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5242bf5bba25a6f479d9f2edac47fd39, type: 3}
 --- !u!1001 &6458499846798016601

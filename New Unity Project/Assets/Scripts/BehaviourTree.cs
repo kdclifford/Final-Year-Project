@@ -18,6 +18,7 @@ public class CUI
 public class BehaviourTree : MonoBehaviour
 {
     [SerializeField] private Animator animation;
+    [SerializeField] private Animator playerAnimation;    
     public GameObject[,] Map;
     private GameObject gameManager;
     private GameObject playerObject;
@@ -46,6 +47,7 @@ public class BehaviourTree : MonoBehaviour
     CSequenceNode AttackSight;
     CSequenceNode AttackHeard;
     CSequenceNode patrol;
+    CTimerNode AttackTimer;
 
     CSelectorNode Root;
 
@@ -96,6 +98,7 @@ public class BehaviourTree : MonoBehaviour
 
         if (Def.isPointInsideSphere(transform.position, targetLocation, 3f))
         {
+            animation.SetInteger("Animation", 0);
             return ENodeState.Success;
         }
         return ENodeState.Running;
@@ -158,9 +161,10 @@ public class BehaviourTree : MonoBehaviour
         MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(100f, 0f));
         Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab, new Vector2(350f, 100f));
         AttackThePlayer = new CActionNode(AttackPlayer, "AttackThePlayer", myPrefab, new Vector2(-350, -50));
+        AttackTimer = new CTimerNode(AttackThePlayer, "Attack Timer", myPrefab, new Vector2(-350, 50));
 
 
-        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy, AttackThePlayer };
+        List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy, AttackTimer };
         List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy2 };
         List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
 

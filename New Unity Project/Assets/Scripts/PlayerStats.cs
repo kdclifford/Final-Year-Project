@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         HealthBar.fillAmount = currentHealth / Health;
     }
 }
