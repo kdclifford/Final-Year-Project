@@ -9,6 +9,7 @@ TagManager:
   - Vision Cone
   - PatrolPoint
   - Map Icon
+  - Text
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Vision
   - FootSteps
   - MiniMapIcon
-  - 
+  - Text
   - 
   - 
   - 
