@@ -88,10 +88,10 @@ public class BehaviourTree : MonoBehaviour
         HearThePlayer();
         SeeThePlayer();
         agent.SetDestination(targetLocation);
+        animation.SetInteger("Animation", 2);
 
         if (Def.isPointInsideSphere(transform.position, targetLocation, 3f))
         {
-            animation.SetInteger("Animation", 2);
             return ENodeState.Success;
         }
         return ENodeState.Running;
@@ -131,6 +131,7 @@ public class BehaviourTree : MonoBehaviour
     {
         if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 3f))
         {
+            animation.SetInteger("Animation", 3);
             playerHealth.currentHealth -= 10f;
             return ENodeState.Success;
         }
