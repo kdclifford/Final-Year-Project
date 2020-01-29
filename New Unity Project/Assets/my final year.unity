@@ -1820,7 +1820,7 @@ Canvas:
   m_GameObject: {fileID: 1298912840}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 50179227}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -3313,7 +3313,7 @@ PrefabInstance:
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
@@ -3323,7 +3323,7 @@ PrefabInstance:
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
@@ -3338,7 +3338,7 @@ PrefabInstance:
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5750301918377368197, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
@@ -3349,6 +3349,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boximon Fiery
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755028546085935371, guid: 5242bf5bba25a6f479d9f2edac47fd39,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.70454764
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755028546085935371, guid: 5242bf5bba25a6f479d9f2edac47fd39,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.024620503
       objectReference: {fileID: 0}
     - target: {fileID: 5755028546085935373, guid: 5242bf5bba25a6f479d9f2edac47fd39,
         type: 3}
