@@ -23,6 +23,7 @@ public class BehaviourTree : MonoBehaviour
     private FieldOfView fieldOfViewAI;
     private FootSteps playerTargetList;
     NavMeshAgent agent;
+    public GameObject TreeList;
 
     int playerFootSteps;
     int playerList;
@@ -178,19 +179,19 @@ public class BehaviourTree : MonoBehaviour
 
     void RunTree()
     {
-        foreach (CNode i in AllNodes)
-        {
-            //i.ResetTreeStates();
-            //i.UpdatePrefab();
-            if (showHud)
-            {
-                i.mPrefab.SetActive(true);
-            }
-            else
-            {
-                i.mPrefab.SetActive(false);
-            }
-        }
+        //foreach (CNode i in AllNodes)
+        //{
+        //    //i.ResetTreeStates();
+        //    //i.UpdatePrefab();
+        //    if (showHud)
+        //    {
+        //        i.mPrefab.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        i.mPrefab.SetActive(false);
+        //    }
+        //}
         if (currentnode == null)
         {
             currentnode = Root.RunTree();
@@ -241,6 +242,9 @@ public class BehaviourTree : MonoBehaviour
 
 
         RunTree();
+
+        TreeList.GetComponent<BehaviourTab>().stringVar1 = currentnode.GetName();
+
 
         // DisplayCurrentNode();
 

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Animations;
 using System.Collections.Generic;
 
 public class FootSteps : MonoBehaviour
 {
 
-
+    [SerializeField] private Animator animation;
     Vector3 oldPos;
     Vector3 newPos;
 
@@ -61,6 +62,10 @@ public class FootSteps : MonoBehaviour
     public Material alertColour;
     public Material normalColour;
 
+
+    private bool isJumping = false;
+
+
     // **** Sets Varibles When The Project Starts ****
     void Start()
     {
@@ -91,24 +96,23 @@ public class FootSteps : MonoBehaviour
         TargetInView();
 
 
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            isJumping = true;
+        }
 
-
+        
 
         if (Input.GetKey(forward) | Input.GetKey(back) | Input.GetKey(left) | Input.GetKey(right))
         {
             oldPos = transform.position;
 
             if (oldPos != newPos)
-            {
-                //if (!Input.GetKey(sprint))
-                //{
-                //    p -= soundSpeed;
-                //    p = Mathf.Clamp(p, 0.0f, 1.0f);
-                //    soundRadius = normalRadius * (1 - p) + sprintRadius * p;
-                //}
+            {     
 
                 if (Input.GetKey(crouch))
                 {
+                    animation.SetInteger("Animation", 5);
                     q = 0.0f;
                     p = 0.0f;
                     t = 0.0f;
@@ -121,7 +125,8 @@ public class FootSteps : MonoBehaviour
                     soundRadius = soundRadius * (1 - w) + crouchRadius * w;
                 }
                 else if (Input.GetKey(sprint))
-                {
+                {                    
+                    animation.SetInteger("Animation", 2);                    
                     q = 0.0f;
                     p = 0.0f;
                     w = 0.0f;
@@ -134,7 +139,8 @@ public class FootSteps : MonoBehaviour
                     soundRadius = soundRadius * (1 - t) + sprintRadius * t;
                 }
                 else
-                {
+                {                   
+                    animation.SetInteger("Animation", 1);
                     t = 0.0f;
                     w = 0.0f;
                     p = 0.0f;
@@ -143,6 +149,7 @@ public class FootSteps : MonoBehaviour
                     q += soundSpeed;
                     q = Mathf.Clamp(q, 0.0f, 1.0f);
                     soundRadius = soundRadius * (1 - q) + normalRadius * q;
+                    
                 }
 
             }
@@ -162,9 +169,18 @@ public class FootSteps : MonoBehaviour
                 //}
 
             }
+         
         }
         else
         {
+            if (Input.GetKey(crouch))
+            {
+                animation.SetInteger("Animation", 4);
+            }
+            else
+            {
+                animation.SetInteger("Animation", 0);
+            }
             t = 0.0f;
             w = 0.0f;
             q = 0.0f;
@@ -173,61 +189,17 @@ public class FootSteps : MonoBehaviour
             soundRadius = soundRadius * (1 - p) + stillRadius * p;
             playerMovement.movementSpeed = normalSpeed;
             playerMovement.jumpMultiplier = normalJumpHeight;
-            //if (soundRadius < sprintRadius & soundRadius > crouchRadius)
-            //{
-            //    currentRadius = normalRadius;
-            //}
+            
 
         }
-        //p = Mathf.Clamp(p, 0.0f, 1.0f);
+
+        if (isJumping)
+        {
+            animation.SetInteger("Animation", 3);
+            isJumping = false;
+        }
+
         newPos = transform.position;
-
-
-        //if (Input.GetKeyUp(sprint))
-        //{
-        //    t = 0.0f;
-        //}
-
-
-        // **** Vison Cone LERP
-        //if (Input.GetKey(crouch))
-        //{
-        //    p += 0.1f;         
-        //    q = 0.0f;
-        //    t = 0.0f;
-        //    soundRadius = currentRadius * (1 - p) + crouchRadus * p;
-        //    playerMovement.movementSpeed = crouchSpeed;
-        //    playerMovement.jumpMultiplier = crouchJumpHeight;
-        //    currentRadius = soundRadius;
-        //}
-        //else if (Input.GetKey(sprint))
-        //{
-
-        //    t += 0.1f;
-        //    q = 0.0f;
-        //    p = 0.0f;
-
-        //    soundRadius = currentRadius * (1 - t) + sprintRadius * t;
-        //    playerMovement.movementSpeed = sprintSpeed;
-        //    currentRadius = soundRadius;
-        //}
-        //else 
-        //{
-        //    q += 0.1f;
-        //    soundRadius = currentRadius * (1 - q) + normalRadius * q;
-        //    t = 0.0f;
-        //    p = 0.0f;
-        //       // soundRadius = normalRadius * (1 - t) + currentRadius * t;
-
-        //    //soundRadius = normalRadius;
-        //    playerMovement.movementSpeed = normalSpeed;
-        //    playerMovement.jumpMultiplier = normalJumpHeight;
-        //    currentRadius = soundRadius;
-        //}
-        //t = Mathf.Clamp(t, 0.0f, 1.0f);
-        //q = Mathf.Clamp(q, 0.0f, 1.0f);
-        //p = Mathf.Clamp(p, 0.0f, 1.0f);
-
 
     }
 

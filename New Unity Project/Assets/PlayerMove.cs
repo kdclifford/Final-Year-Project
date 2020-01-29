@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -14,18 +15,23 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public float jumpMultiplier;
     [SerializeField] private KeyCode jumpKey;
 
-    private bool isJumping;
+
+    [SerializeField] private Animator animation;
+
+    [HideInInspector]
+    public bool isJumping;
 
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+        animation.SetInteger("Animation", 0);
     }
     private void Update()
     {
         PlayerMovement();
     }
     private void PlayerMovement()
-    {
+    {        
         float horizInput = Input.GetAxis(horizontalInputName);
         float vertInput = Input.GetAxis(verticalInputName);
 
