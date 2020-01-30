@@ -1094,8 +1094,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animation: {fileID: 7867449605363207948}
-  playerAnimation: {fileID: 0}
+  playerTargetList: {fileID: 0}
+  agent: {fileID: 0}
   TreeList: {fileID: 0}
+  visibleTargets: []
   targetLocation: {x: 0, y: 0, z: 0}
   patrolPts:
   - {fileID: 0}
@@ -1103,8 +1105,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerHealth: {fileID: 0}
-  myPrefab: {fileID: 0}
   currentPatrolPt: 0
+  currentState: 0
+  currentName: 
 --- !u!195 &7817393816532104825
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1140,7 +1143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 12
-  viewAngle: 90
+  viewAngle: 145
   targetMask:
     serializedVersion: 2
     m_Bits: 1024

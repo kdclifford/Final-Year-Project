@@ -100,8 +100,6 @@ public class FootSteps : MonoBehaviour
             isJumping = true;
         }
 
-        //animation.SetInteger("Animation", 7);
-
         if (Input.GetKey(forward) | Input.GetKey(back) | Input.GetKey(left) | Input.GetKey(right))
         {
             oldPos = transform.position;

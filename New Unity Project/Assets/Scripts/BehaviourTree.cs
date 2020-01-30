@@ -18,25 +18,25 @@ public class CUI
 public class BehaviourTree : MonoBehaviour
 {
     [SerializeField] private Animator animation;
-    [SerializeField] private Animator playerAnimation;    
+    
     public GameObject[,] Map;
     private GameObject gameManager;
     private GameObject playerObject;
     private GameObject enemyObject;
-    private FieldOfView fieldOfViewAI;
-    private FootSteps playerTargetList;
-    NavMeshAgent agent;
-    public GameObject TreeList;
+    // private FieldOfView fieldOfViewAI;
+    [SerializeField] private FootSteps playerTargetList;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] public GameObject TreeList;
 
     int playerFootSteps;
     int playerList;
-    private List<Transform> visibleTargets = new List<Transform>();
+    [SerializeField] private List<Transform> visibleTargets = new List<Transform>();
 
-    public Vector3 targetLocation;
+    [SerializeField] private Vector3 targetLocation;
 
     public List<GameObject> patrolPts = new List<GameObject>();
     public PlayerStats playerHealth; 
-    public GameObject myPrefab;
+    //public GameObject myPrefab;
 
     //Nodes
     CActionNode Hearing;
@@ -59,18 +59,17 @@ public class BehaviourTree : MonoBehaviour
 
     ENodeState HearThePlayer()
     {
-        if (playerFootSteps > 0)
-        {
+        
             for (int i = 0; i < playerFootSteps; i++)
             {
-                if (playerTargetList.footStepTargets[i].transform == this.transform)
+                if (playerTargetList.footStepTargets[i] == this.transform)
                 {
                     agent.speed = 7;
                     targetLocation = playerObject.transform.position;
                     return ENodeState.Success;
                 }
             }
-        }
+        
         agent.speed = 3.5f;
         return ENodeState.Failure;
     }
@@ -83,7 +82,10 @@ public class BehaviourTree : MonoBehaviour
             targetLocation = playerObject.transform.position;
             return ENodeState.Success;
         }
+        else
+        {
         agent.speed = 3.5f;
+        }
         return ENodeState.Failure;
     }
 
@@ -149,25 +151,25 @@ public class BehaviourTree : MonoBehaviour
     void CreateTree()
     {
         //tree Stuff
-        Hearing = new CActionNode(HearThePlayer, "Hearing", myPrefab, new Vector2(-100f, 0f));
-        Sight = new CActionNode(SeeThePlayer, "Sight", myPrefab, new Vector2(-450f, 0f));
-        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(-280f, 0f));
-        MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer", myPrefab, new Vector2(100f, 0f));
-        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint", myPrefab, new Vector2(350f, 100f));
-        AttackThePlayer = new CActionNode(AttackPlayer, "AttackThePlayer", myPrefab, new Vector2(-350, -50));
-        AttackTimer = new CTimerNode(AttackThePlayer, "Attack Timer", myPrefab, new Vector2(-350, 50), 1f);
+        Hearing = new CActionNode(HearThePlayer, "Hearing");
+        Sight = new CActionNode(SeeThePlayer, "Sight");
+        MoveEnemy = new CActionNode(MoveToPlayer, "MoveToPlayer");
+        MoveEnemy2 = new CActionNode(MoveToPlayer, "MoveToPlayer");
+        Movept = new CActionNode(MoveToPatrolPt, "MoveToPoint");
+        AttackThePlayer = new CActionNode(AttackPlayer, "AttackThePlayer");
+        AttackTimer = new CTimerNode(AttackThePlayer, "Attack Timer" ,1f);
 
         List<CNode> AttackIfSeenPlayer = new List<CNode>() { Sight, MoveEnemy, AttackTimer };
         List<CNode> AttackIfHeardPlayer = new List<CNode>() { Hearing, MoveEnemy2 };
         List<CNode> GoToPatrolPoint = new List<CNode>() { Movept };
 
-        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence", myPrefab, new Vector2(-350f, 100f));
-        AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence", myPrefab, new Vector2(0f, 100f));
+        AttackSight = new CSequenceNode(AttackIfSeenPlayer, "sightSequence");
+        AttackHeard = new CSequenceNode(AttackIfHeardPlayer, "hearSequence");
         // patrol = new CSequenceNode(GoToPatrolPoint, "patrolSequence", myPrefab, new Vector2(350f, 100f));
 
         List<CNode> Tree = new List<CNode>() { AttackSight, AttackHeard, Movept };
 
-        Root = new CSelectorNode(Tree, "Root", myPrefab, new Vector2(0f, 200f));
+        Root = new CSelectorNode(Tree, "Root");
 
         AllNodes.Add(Root);
         // AllNodes.Add(patrol);
@@ -181,7 +183,9 @@ public class BehaviourTree : MonoBehaviour
         AllNodes.Add(AttackThePlayer);
     }
 
-    CNode currentnode;
+   private CNode currentnode;
+    public ENodeState currentState;
+    public string currentName;
     bool showHud = false;
 
     void RunTree()
@@ -203,19 +207,23 @@ public class BehaviourTree : MonoBehaviour
         {
             currentnode = Root.RunTree();            
         }
-        else if (currentnode.mCurrentNodeState == ENodeState.Running)
-        {
-            currentnode = currentnode.RunTree();
-        }
+       else if (currentnode.mCurrentNodeState == ENodeState.Running)
+       {
+           currentnode = currentnode.RunTree();
+       }
         else if (currentnode.mCurrentNodeState == ENodeState.Failure || currentnode.mCurrentNodeState == ENodeState.Success)
         {
             foreach (CNode i in AllNodes)
             {
                 i.ResetTreeStates();
-                i.UpdatePrefab();
+               // i.UpdatePrefab();
             }
             currentnode = Root.RunTree();
         }
+      //  currentnode = Root.RunTree();
+
+        currentState = currentnode.mCurrentNodeState;
+        currentName = currentnode.GetName();
     }
 
     //void DisplayCurrentNode()
