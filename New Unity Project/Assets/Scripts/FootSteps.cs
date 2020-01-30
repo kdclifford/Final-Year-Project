@@ -11,7 +11,7 @@ public class FootSteps : MonoBehaviour
     Vector3 newPos;
 
     public float soundRadius;
-    private float stillRadius = 0.0f;
+    public float stillRadius;
     private float soundAngle = 360;
     public float soundSpeed;
     [Range(0, 1)]
@@ -23,7 +23,6 @@ public class FootSteps : MonoBehaviour
     [Range(0, 1)]
     private float w;
     public LayerMask targetMask;
-    public LayerMask obstacleMask;
 
     // [HideInInspector]
     public List<Transform> footStepTargets = new List<Transform>();
@@ -86,14 +85,14 @@ public class FootSteps : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
+            CanEnemyHearPlayer();
         }
     }
 
     void LateUpdate()
     {
-        DrawFieldOfView();
-        TargetInView();
+        DrawSoundCirle();
+        ChangeColourOfSoundCirle();
 
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -168,13 +167,7 @@ public class FootSteps : MonoBehaviour
                 soundRadius = soundRadius * (1 - p) + stillRadius * p;
                 playerMovement.movementSpeed = normalSpeed;
                 playerMovement.jumpMultiplier = normalJumpHeight;
-                //if (soundRadius < sprintRadius & soundRadius > crouchRadius)
-                //{
-                //    currentRadius = normalRadius;
-                //}
-
-            }
-         
+            }        
         }
         else
         {
@@ -194,8 +187,6 @@ public class FootSteps : MonoBehaviour
             soundRadius = soundRadius * (1 - p) + stillRadius * p;
             playerMovement.movementSpeed = normalSpeed;
             playerMovement.jumpMultiplier = normalJumpHeight;
-            
-
         }
 
         if (isJumping)
@@ -208,7 +199,7 @@ public class FootSteps : MonoBehaviour
 
     }
 
-    void FindVisibleTargets()
+    void CanEnemyHearPlayer()
     {
         footStepTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, soundRadius, targetMask);
@@ -219,17 +210,13 @@ public class FootSteps : MonoBehaviour
 
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < soundAngle / 2)
-            {
-                float dstToTarget = Vector3.Distance(transform.position, target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                {
-                    footStepTargets.Add(target);
-                }
+            {               
+                    footStepTargets.Add(target);                
             }
         }
     }
 
-    void TargetInView()
+    void ChangeColourOfSoundCirle()
     {
         int sizeOfList = footStepTargets.Count;
         if (sizeOfList > 0)
@@ -244,7 +231,7 @@ public class FootSteps : MonoBehaviour
     }
 
 
-    void DrawFieldOfView()
+    void DrawSoundCirle()
     {
         int stepCount = Mathf.RoundToInt(soundAngle * meshResolution);
         float stepAngleSize = soundAngle / stepCount;
@@ -272,9 +259,6 @@ public class FootSteps : MonoBehaviour
                 }
 
             }
-
-
-
             viewPoints.Add(newViewCast.point);
             oldViewCast = newViewCast;
         }
@@ -340,14 +324,7 @@ public class FootSteps : MonoBehaviour
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, dir, out hit, soundRadius, obstacleMask))
-        {
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
-        }
-        else
-        {
-            return new ViewCastInfo(false, transform.position + dir * soundRadius, soundRadius, globalAngle);
-        }
+            return new ViewCastInfo(false, transform.position + dir * soundRadius, soundRadius, globalAngle);        
     }
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)

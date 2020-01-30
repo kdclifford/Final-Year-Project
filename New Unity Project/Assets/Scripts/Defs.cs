@@ -55,7 +55,7 @@ public class Def
         NodeTitle = NodeListUI.transform.GetChild(0).gameObject;
 
 
-        NodeTitle.transform.localPosition = new Vector2(spwanNodeUi.nodeUI.xPos, spwanNodeUi.nodeUI.yPos);
+        NodeTitle.transform.localPosition = new Vector2(spwanNodeUi.mNodeUI.xPos, spwanNodeUi.mNodeUI.yPos);
         return NodeListUI;
     }
 
