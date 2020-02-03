@@ -52,7 +52,7 @@ public class BehaviourTree : MonoBehaviour
     CSelectorNode Root;
 
     //List of all Nodes
-    List<CNode> AllNodes = new List<CNode>();
+    public List<CNode> AllNodes = new List<CNode>();
 
 
     public int currentPatrolPt;
@@ -183,7 +183,7 @@ public class BehaviourTree : MonoBehaviour
         AllNodes.Add(AttackThePlayer);
     }
 
-   private CNode currentnode;
+   public CNode currentnode;
     public ENodeState currentState;
     public string currentName;
     bool showHud = false;

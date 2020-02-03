@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EnemyInfo.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\LookAtPlayerCamera.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Assets\Scripts\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\FootSteps.cs" />
     <Compile Include="Assets\Scripts\MiniMapMove.cs" />
+    <Compile Include="Assets\Scripts\NewInspectorWindow\TreeVisualization.cs" />
     <Compile Include="Assets\Scripts\NodeStates.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
