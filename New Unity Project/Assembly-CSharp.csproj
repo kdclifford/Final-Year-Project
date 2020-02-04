@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\EnemyInfo.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\LookAtPlayerCamera.cs" />
@@ -85,7 +86,10 @@
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
     <None Include="Assets\Map1.txt" />
+    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
+    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
     <None Include="Assets\Map0.txt" />
+    <None Include="Assets\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/KClifford1/Documents/GitHub/Final-Year-Project/New Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
