@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 12
-  viewAngle: 145
+  viewAngle: 120
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -1346,7 +1346,7 @@ MonoBehaviour:
   meshResolution: 1
   edgeResolveIterations: 6
   edgeDstThreshold: 1
-  visionConeheight: -0.4
+  visionConeheight: -0.2
   viewMeshFilter: {fileID: 7817393815711796621}
   alertColour: {fileID: 2100000, guid: 19dd52f322722c846aaa04f312097a3b, type: 2}
   normalColour: {fileID: 2100000, guid: eff134691488ae34ca143d6598439934, type: 2}
