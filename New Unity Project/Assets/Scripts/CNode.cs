@@ -90,11 +90,6 @@ public class CActionNode : CNode
         SetName(name);
         mNodeUI = new CUI();
         mNodeUI.NodeName = GetName();
-        //mNodeUI.xPos = pos.x;
-        //mNodeUI.yPos = pos.y;
-        //mPrefab = Prefab;
-        //mPrefab = Def.SpawnNodeUI(this, mPrefab);
-        //mPrefab.SetActive(false);
     }
 
     public override CNode RunTree()
@@ -178,7 +173,7 @@ public class CSequenceNode : CNode
     public CSequenceNode(List<CNode> PassedChildNodes, string name)
     {
         SetChildren(PassedChildNodes);
-        SetName(name);
+        SetName(name + "Sequence");
         mNodeUI = new CUI();
         mNodeUI.NodeName = GetName() + "Sequence";
         //mNodeUI.xPos = pos.x;
@@ -230,24 +225,19 @@ public class CTimerNode : CNode
     public float mTimer;
     public float mTimerDelay;
 
-    public CTimerNode(CNode childNode , string name, float delay)
+    public CTimerNode(CNode childNode, string name, float delay)
     {
         mChild = childNode;
-        SetName(name);
+        SetName(name + "Timer");
         mNodeUI = new CUI();
         mNodeUI.NodeName = GetName() + "Timer";
-        //mNodeUI.xPos = pos.x;
-        //mNodeUI.yPos = pos.y;
-        //mPrefab = Prefab;
-        //mPrefab = Def.SpawnNodeUI(this, mPrefab);
-        //mPrefab.SetActive(false);
         mTimer = Time.time;
         mTimerDelay = delay;
     }
 
     public override CNode RunTree()
     {
-        if(mTimer + mTimerDelay  < Time.time)
+        if (mTimer + mTimerDelay < Time.time)
         {
             mTimer = Time.time;
             mChild.RunTree();
@@ -258,6 +248,38 @@ public class CTimerNode : CNode
 
         mCurrentNodeState = ENodeState.Failure;
         //UpdatePrefab();
+        return this;
+    }
+}
+
+
+
+public class CInverterNode : CNode
+{
+    public delegate ENodeState mAction();
+    CNode mChild;
+
+    public CInverterNode(CNode childNode, string name)
+    {
+        mChild = childNode;
+        SetName(name + "Inverter");
+    }
+
+    public override CNode RunTree()
+    {
+        mChild.RunTree();
+        if (mChild.mCurrentNodeState == ENodeState.Failure)
+        {
+            mCurrentNodeState = ENodeState.Success;
+            return this;
+        }
+        else if (mChild.mCurrentNodeState == ENodeState.Success)
+        {
+            mCurrentNodeState = ENodeState.Failure;
+            return this;
+        }
+
+        mCurrentNodeState = ENodeState.Running;
         return this;
     }
 }

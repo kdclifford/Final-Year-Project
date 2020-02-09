@@ -11,6 +11,11 @@ public class AiActionFunctions : MonoBehaviour
     private Animator aiAnimation;
     private FootSteps hearTargetList;
     private List<Transform> visibleTargets = new List<Transform>();
+    private EnemyInfo enemyStats;
+
+    public List<GameObject> HealthPackList = new List<GameObject>();
+
+
 
     [SerializeField] private Vector3 targetLocation;
 
@@ -27,6 +32,7 @@ public class AiActionFunctions : MonoBehaviour
         hearTargetList = playerObject.GetComponent<FootSteps>();
         visibleTargets = GetComponent<FieldOfView>().visibleTargets;
         playerHealth = playerObject.GetComponent<PlayerStats>();
+        enemyStats = GetComponent<EnemyInfo>();
     }
 
 
@@ -129,4 +135,47 @@ public class AiActionFunctions : MonoBehaviour
         return ENodeState.Failure;
     }
            
+    public ENodeState IsHealthLow()
+    {
+        if( enemyStats.currentHealth <= (enemyStats.maxHealth / 100) * 10)
+        {
+            return ENodeState.Success;
+        }
+
+        return ENodeState.Failure;
+    }
+
+    public ENodeState GetHealthPack()
+    {
+        if (enemyStats.HealthPack == null)
+        {
+            foreach (GameObject healthPack in HealthPackList)
+            {               
+                    healthPack.GetComponent<HealthPackInfo>().IsBeingUsed = true;
+                enemyStats.HealthPack.transform.position = healthPack.transform.position;
+            }
+        }
+
+
+        if (enemyStats.HealthPack != null)
+        {
+            agentNavMesh.SetDestination(enemyStats.HealthPack.transform.position);
+            if (Def.isPointInsideSphere(transform.position, enemyStats.HealthPack.transform.position, 3f))
+            {
+                enemyStats.currentHealth = enemyStats.maxHealth;
+                return ENodeState.Success;
+            }
+
+            return ENodeState.Running;
+        }
+
+
+
+        return ENodeState.Failure;
+
+    }
+
+
+
+
 }

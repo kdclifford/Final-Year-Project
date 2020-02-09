@@ -30,12 +30,17 @@ public class BehaviourTree : MonoBehaviour
     CActionNode Hearing;
     CActionNode Sight;
     CActionNode MoveEnemy;
-    CActionNode MoveEnemy2;
-    CActionNode Patrol;
+    CActionNode PatrolPT;
     CActionNode AttackThePlayer;
+    CActionNode HealthLow;
+    CActionNode GetHealth;
+
     CSequenceNode AttackSight;
     CSequenceNode AttackHeard;
     CSequenceNode Health;
+    CSequenceNode Patrol;
+
+    CInverterNode HealthInverter;
     CTimerNode AttackTimer;
     CSelectorNode Root;
 
@@ -47,10 +52,14 @@ public class BehaviourTree : MonoBehaviour
         // Action Nodes
         Hearing = new CActionNode(actions.HearThePlayer, "Hearing");
         Sight = new CActionNode(actions.SeeThePlayer, "Sight");
-        MoveEnemy = new CActionNode(actions.MoveToPlayer, "MoveToPlayer");     
-        Patrol = new CActionNode(actions.MoveToPatrolPt, "MoveToPoint");
+        MoveEnemy = new CActionNode(actions.MoveToPlayer, "MoveEnemy");     
+        PatrolPT = new CActionNode(actions.MoveToPatrolPt, "PatrolPT");
         AttackThePlayer = new CActionNode(actions.AttackPlayer, "AttackThePlayer");
+        HealthLow = new CActionNode(actions.IsHealthLow, "HealthLow");
+        GetHealth = new CActionNode(actions.GetHealthPack, "GetHealth");
 
+        // Inverter Nodes
+        HealthInverter = new CInverterNode(HealthLow, "Health");
 
         // Timer Nodes
         AttackTimer = new CTimerNode(AttackThePlayer, "Attack" ,1f);
@@ -58,20 +67,23 @@ public class BehaviourTree : MonoBehaviour
 
         // Sequence Nodes
         AttackSight = new CSequenceNode(new List<CNode>(){ Sight, MoveEnemy, AttackTimer }, "sight");
-        AttackHeard = new CSequenceNode(new List<CNode>() { Hearing, MoveEnemy, AttackTimer }, "hear");
-        Health = new CSequenceNode(new List<CNode>() { }, "health");
+        AttackHeard = new CSequenceNode(new List<CNode>() { Hearing, MoveEnemy}, "hear");
+        Health = new CSequenceNode(new List<CNode>() { HealthLow, GetHealth }, "health");
+        Patrol = new CSequenceNode(new List<CNode>() { HealthInverter, PatrolPT }, "patrol");
 
         // Root Node
-        Root = new CSelectorNode(new List<CNode>() { AttackSight, AttackHeard, Patrol }, "Root");
+        Root = new CSelectorNode(new List<CNode>() { Health, AttackSight, AttackHeard, Patrol }, "Root");
 
         AllNodes.Add(Root);
         AllNodes.Add(AttackHeard);
         AllNodes.Add(AttackSight);
         AllNodes.Add(Patrol);
+        AllNodes.Add(PatrolPT);
         AllNodes.Add(MoveEnemy);
         AllNodes.Add(Sight);
         AllNodes.Add(Hearing);
         AllNodes.Add(AttackThePlayer);
+        AllNodes.Add(Health);
     }
 
    public CNode currentnode;
