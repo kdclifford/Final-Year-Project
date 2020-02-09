@@ -180,7 +180,7 @@ public class CSequenceNode : CNode
         SetChildren(PassedChildNodes);
         SetName(name);
         mNodeUI = new CUI();
-        mNodeUI.NodeName = GetName();
+        mNodeUI.NodeName = GetName() + "Sequence";
         //mNodeUI.xPos = pos.x;
         //mNodeUI.yPos = pos.y;
         //mPrefab = Prefab;
@@ -235,7 +235,7 @@ public class CTimerNode : CNode
         mChild = childNode;
         SetName(name);
         mNodeUI = new CUI();
-        mNodeUI.NodeName = GetName();
+        mNodeUI.NodeName = GetName() + "Timer";
         //mNodeUI.xPos = pos.x;
         //mNodeUI.yPos = pos.y;
         //mPrefab = Prefab;
