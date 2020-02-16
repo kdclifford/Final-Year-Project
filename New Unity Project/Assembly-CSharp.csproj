@@ -64,11 +64,17 @@
   <ItemGroup>
     <Compile Include="Assets\AiActionFunctions.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorController.cs" />
+    <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorToggle.cs" />
+    <Compile Include="Assets\CameraMove.cs" />
+    <Compile Include="Assets\CameraSwitcher.cs" />
     <Compile Include="Assets\EnemyInfo.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\HealthPackInfo.cs" />
     <Compile Include="Assets\LookAtPlayerCamera.cs" />
     <Compile Include="Assets\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
+    <Compile Include="Assets\MenuInfo.cs" />
+    <Compile Include="Assets\MouseClick.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
