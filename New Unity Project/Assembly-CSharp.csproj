@@ -62,33 +62,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AiActionFunctions.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorController.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorToggle.cs" />
-    <Compile Include="Assets\CameraMove.cs" />
-    <Compile Include="Assets\CameraSwitcher.cs" />
-    <Compile Include="Assets\EnemyInfo.cs" />
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\HealthPackInfo.cs" />
-    <Compile Include="Assets\LookAtPlayerCamera.cs" />
     <Compile Include="Assets\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
-    <Compile Include="Assets\MenuInfo.cs" />
-    <Compile Include="Assets\MouseClick.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <Compile Include="Assets\Scripts\AiActionFunctions.cs" />
     <Compile Include="Assets\Scripts\BehaviourTab.cs" />
     <Compile Include="Assets\Scripts\BehaviourTree.cs" />
     <Compile Include="Assets\Scripts\BirdsEyemove.cs" />
     <Compile Include="Assets\Scripts\CNode.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\CameraSwitcher.cs" />
     <Compile Include="Assets\Scripts\Defs.cs" />
+    <Compile Include="Assets\Scripts\EnemyInfo.cs" />
     <Compile Include="Assets\Scripts\EnemyVision.cs" />
     <Compile Include="Assets\Scripts\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\FootSteps.cs" />
+    <Compile Include="Assets\Scripts\HealthPackInfo.cs" />
+    <Compile Include="Assets\Scripts\LookAtPlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\MenuInfo.cs" />
     <Compile Include="Assets\Scripts\MiniMapMove.cs" />
+    <Compile Include="Assets\Scripts\MouseClick.cs" />
     <Compile Include="Assets\Scripts\NewInspectorWindow\TreeVisualization.cs" />
     <Compile Include="Assets\Scripts\NodeStates.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
