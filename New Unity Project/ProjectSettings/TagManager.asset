@@ -12,6 +12,7 @@ TagManager:
   - PlayerCamera
   - ScreenCanvas
   - GameManager
+  - ImGameIcon
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - FootSteps
   - MiniMapIcon
   - Text
-  - 
+  - Icon
   - 
   - 
   - 

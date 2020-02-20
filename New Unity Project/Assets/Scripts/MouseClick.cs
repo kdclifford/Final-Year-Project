@@ -9,6 +9,10 @@ public class MouseClick : MonoBehaviour
     public List<string> ClickTagList;
 
     private Camera MainCam;
+    public GameObject selectedIcon;
+    public Canvas enemyCanvas;
+    public Vector3 IconPosistion;
+
 
 
     private void Start()
@@ -54,7 +58,22 @@ public class MouseClick : MonoBehaviour
                     {
                         if (hitInfo.transform.gameObject.tag == s)
                         {
-                           // CurrentSelected = hitInfo.transform.gameObject;
+                            // CurrentSelected = hitInfo.transform.gameObject;
+                            //SwitchedCamera.transform.parent = player.transform;
+                           enemyCanvas = hitInfo.transform.gameObject.transform.Find("EnemyCanvas").GetComponent<Canvas>();
+
+                            selectedIcon.transform.parent = enemyCanvas.transform;
+
+                            selectedIcon.transform.localRotation = Quaternion.identity;
+                            selectedIcon.transform.localPosition = IconPosistion;
+
+                            MainCam.GetComponent<CameraMove>().enabled= false;
+
+                            MainCam.transform.parent = hitInfo.transform.gameObject.transform;
+                           // SwitchedCamera.transform.localPosition = oldCameraPos;
+                            MainCam.transform.rotation = MainCam.transform.parent.rotation;
+                            //MainCam.transform.localPosition = new Vector3(0, 0, 0); 
+                            MainCam.transform.localPosition = new Vector3(0,4,-8sw);
 
                             Debug.Log("It's Working!");
                             break;
