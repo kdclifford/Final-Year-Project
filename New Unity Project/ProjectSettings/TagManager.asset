@@ -13,6 +13,8 @@ TagManager:
   - ScreenCanvas
   - GameManager
   - ImGameIcon
+  - Player Camera
+  - SideMenu
   layers:
   - Default
   - TransparentFX

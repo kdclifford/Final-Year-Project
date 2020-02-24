@@ -12,8 +12,9 @@ public class MouseClick : MonoBehaviour
     public GameObject selectedIcon;
     public Canvas enemyCanvas;
     public Vector3 IconPosistion;
-
-
+    public EnemyInfo canvasInfo;
+    public GameObject menuCanvas;
+    public Text enemyName;
 
     private void Start()
     {
@@ -58,9 +59,8 @@ public class MouseClick : MonoBehaviour
                     {
                         if (hitInfo.transform.gameObject.tag == s)
                         {
-                            // CurrentSelected = hitInfo.transform.gameObject;
-                            //SwitchedCamera.transform.parent = player.transform;
-                           enemyCanvas = hitInfo.transform.gameObject.transform.Find("EnemyCanvas").GetComponent<Canvas>();
+
+                           enemyCanvas = hitInfo.transform.Find("EnemyCanvas").GetComponent<Canvas>();
 
                             selectedIcon.transform.parent = enemyCanvas.transform;
 
@@ -70,10 +70,15 @@ public class MouseClick : MonoBehaviour
                             MainCam.GetComponent<CameraMove>().enabled= false;
 
                             MainCam.transform.parent = hitInfo.transform.gameObject.transform;
-                           // SwitchedCamera.transform.localPosition = oldCameraPos;
+
+                            MainCam.transform.localPosition = new Vector3(0, 4, -8);
                             MainCam.transform.rotation = MainCam.transform.parent.rotation;
-                            //MainCam.transform.localPosition = new Vector3(0, 0, 0); 
-                            MainCam.transform.localPosition = new Vector3(0,4,-8sw);
+
+                            menuCanvas = GameObject.FindGameObjectWithTag("SideMenu");
+                            canvasInfo = hitInfo.transform.GetComponent<EnemyInfo>();
+                            enemyName = menuCanvas.transform.Find("Name").GetComponent<Text>();
+                            enemyName.text = canvasInfo.enemyNameText.text;
+
 
                             Debug.Log("It's Working!");
                             break;
