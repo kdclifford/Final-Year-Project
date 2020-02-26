@@ -76,8 +76,8 @@ public class MouseClick : MonoBehaviour
 
                             menuCanvas = GameObject.FindGameObjectWithTag("SideMenu");
                             canvasInfo = hitInfo.transform.GetComponent<EnemyInfo>();
-                            enemyName = menuCanvas.transform.Find("Name").GetComponent<Text>();
-                            enemyName.text = canvasInfo.enemyNameText.text;
+                            menuCanvas.transform.Find("Name").GetComponent<Text>().text = canvasInfo.enemyNameText.text;
+                            menuCanvas.transform.Find("CurrentNode").GetComponent<Text>().text = hitInfo.transform.GetComponent<BehaviourTree>().currentnode.GetParent().GetName();
 
 
                             Debug.Log("It's Working!");
