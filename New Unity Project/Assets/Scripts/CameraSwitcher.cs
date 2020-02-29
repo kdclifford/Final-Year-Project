@@ -39,20 +39,20 @@ public class CameraSwitcher : MonoBehaviour
             SwitchedCamera.GetComponent<PlayerCamera>().enabled = IsSwitched;
             player.GetComponent<PlayerMove>().enabled = IsSwitched;
             SwitchedCamera.GetComponent<CameraMove>().enabled = !IsSwitched;
-                GameManager.GetComponent<MouseClick>().enabled = !IsSwitched;
+                //GameManager.GetComponent<MouseClick>().enabled = !IsSwitched;
 
             // if cam free roam
             if (!IsSwitched)
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 SwitchedCamera.transform.parent = null;
-                SideMenu.SetActive(true);
+                //SideMenu.SetActive(true);
                 MiniMap.SetActive(false);
                 HealthBar.SetActive(false);
             }
             else // locked camera
             {
-                SideMenu.SetActive(false);
+                //SideMenu.SetActive(false);
                 MiniMap.SetActive(true);
                 HealthBar.SetActive(true);
                 Cursor.lockState = CursorLockMode.Locked;

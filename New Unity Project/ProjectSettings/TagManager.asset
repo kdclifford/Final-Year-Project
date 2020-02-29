@@ -15,6 +15,7 @@ TagManager:
   - ImGameIcon
   - Player Camera
   - SideMenu
+  - NodeHolder
   layers:
   - Default
   - TransparentFX

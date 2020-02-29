@@ -16,9 +16,19 @@ public class MouseClick : MonoBehaviour
     public GameObject menuCanvas;
     public Text enemyName;
 
+    public GameObject SelectedAgent;
+    public bool isTargetSelected = false;
+    public CNode currentNode;
+    public BehaviourTree currentTree;
+
+    public GameObject enemy;
+
+    public int test = 0;
+
     private void Start()
     {
         MainCam = GameObject.FindWithTag("PlayerCamera").GetComponent<Camera>();
+        menuCanvas = GameObject.FindGameObjectWithTag("SideMenu");
     }
 
     void Update()
@@ -33,9 +43,6 @@ public class MouseClick : MonoBehaviour
 
             RaycastHit hitInfo = new RaycastHit();
             bool hit = Physics.Raycast(MainCam.ScreenPointToRay(Input.mousePosition), out hitInfo);
-
-
-
 
             if (results.Count > 0)
             {
@@ -59,26 +66,29 @@ public class MouseClick : MonoBehaviour
                     {
                         if (hitInfo.transform.gameObject.tag == s)
                         {
-
-                           enemyCanvas = hitInfo.transform.Find("EnemyCanvas").GetComponent<Canvas>();
+                            SelectedAgent = hitInfo.transform.gameObject;
+                           enemyCanvas = SelectedAgent.transform.Find("EnemyCanvas").GetComponent<Canvas>();
 
                             selectedIcon.transform.parent = enemyCanvas.transform;
 
                             selectedIcon.transform.localRotation = Quaternion.identity;
                             selectedIcon.transform.localPosition = IconPosistion;
 
-                            MainCam.GetComponent<CameraMove>().enabled= false;
+                            MainCam.GetComponent<CameraMove>().enabled = false;
 
-                            MainCam.transform.parent = hitInfo.transform.gameObject.transform;
+                            MainCam.transform.parent = SelectedAgent.transform.gameObject.transform;
 
                             MainCam.transform.localPosition = new Vector3(0, 4, -8);
                             MainCam.transform.rotation = MainCam.transform.parent.rotation;
 
-                            menuCanvas = GameObject.FindGameObjectWithTag("SideMenu");
-                            canvasInfo = hitInfo.transform.GetComponent<EnemyInfo>();
+                           // menuCanvas = GameObject.FindGameObjectWithTag("SideMenu");
+                            canvasInfo = SelectedAgent.transform.GetComponent<EnemyInfo>();
                             menuCanvas.transform.Find("Name").GetComponent<Text>().text = canvasInfo.enemyNameText.text;
-                            menuCanvas.transform.Find("CurrentNode").GetComponent<Text>().text = hitInfo.transform.GetComponent<BehaviourTree>().currentnode.GetParent().GetName();
+                            //menuCanvas.transform.Find("CurrentNode").GetComponent<Text>().text = "Parent Node: " + SelectedAgent.transform.GetComponent<BehaviourTree>().currentnode.GetParent().GetName();
 
+                            currentTree = SelectedAgent.transform.GetComponent<BehaviourTree>();
+
+                            isTargetSelected = true;
 
                             Debug.Log("It's Working!");
                             break;
@@ -93,7 +103,39 @@ public class MouseClick : MonoBehaviour
             Debug.Log("Mouse is down");
         }
 
-     
+
+        //if (isTargetSelected)
+        //{
+        //        canvasInfo = SelectedAgent.transform.GetComponent<EnemyInfo>();
+        //        currentNode = SelectedAgent.transform.GetComponent<BehaviourTree>().currentnode.GetName();
+        //        menuCanvas.transform.Find("CurrentNode").GetComponent<Text>().text = currentNode;
+
+        //    if (SelectedAgent.transform.GetComponent<BehaviourTree>().currentnode.GetParent() != null)
+        //    {
+        //    }
+        //}
+        if (SelectedAgent != null)
+        {
+            currentNode = SelectedAgent.GetComponent<BehaviourTree>().currentnode;
+
+            menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetName();
+
+            Color NodeText = Color.white;
+            switch (currentNode.mCurrentNodeState)
+            {
+                case ENodeState.Success:
+                    NodeText = Color.green;
+                    break;
+                case ENodeState.Failure:
+                    NodeText = Color.red;
+                    break;
+                case ENodeState.Running:
+                    NodeText = Color.yellow;
+                    break;
+            }
+            menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().color = NodeText;
+        }
+
     }
 
 }
