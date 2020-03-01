@@ -92,17 +92,17 @@
     <Compile Include="Assets\Scripts\MouseClick.cs" />
     <Compile Include="Assets\Scripts\NewInspectorWindow\TreeVisualization.cs" />
     <Compile Include="Assets\Scripts\NodeStates.cs" />
+    <Compile Include="Assets\Scripts\ParseXML.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
     <Compile Include="Assets\TreeDisplay.cs" />
-    <None Include="Assets\Map1.txt" />
     <None Include="Assets\LowPolyWater_Pack\Shaders\WaterShaded.shader" />
     <None Include="Assets\LowPolyWater_Pack\LowPoly Island\Credits.txt" />
     <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
     <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
-    <None Include="Assets\Map0.txt" />
     <None Include="Assets\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
+    <None Include="Assets\Resources\Enemy1Tree.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/KClifford1/Documents/GitHub/Final-Year-Project/New Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

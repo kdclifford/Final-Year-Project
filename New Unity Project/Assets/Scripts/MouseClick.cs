@@ -118,7 +118,15 @@ public class MouseClick : MonoBehaviour
         {
             currentNode = SelectedAgent.GetComponent<BehaviourTree>().currentnode;
 
-            menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetName();
+            if (currentNode.GetParent() != null)
+            {
+                menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetParent().GetName();
+            }
+            else
+            {
+                menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetName();
+            }
+
 
             Color NodeText = Color.white;
             switch (currentNode.mCurrentNodeState)

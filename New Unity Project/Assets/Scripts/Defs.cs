@@ -104,10 +104,20 @@ public class Def
     //}
 
 
-
-
-
-
+    public static Color NodeColour (ENodeState state)
+    {
+        Color NodeText = Color.white;
+        switch (state)
+        {
+            case ENodeState.Success:
+                return NodeText = Color.green;
+            case ENodeState.Failure:
+                return NodeText = Color.red;
+            case ENodeState.Running:
+                return NodeText = Color.yellow;
+        }
+        return Color.white;
+    }
 
 
 

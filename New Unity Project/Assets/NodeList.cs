@@ -12,6 +12,10 @@ public class NodeList : MonoBehaviour
     public bool isSpawned = false;
     public GameObject ParentNode;
 
+    public CNode SelectedTarget;
+    public List<CNode> childNodes;
+
+    public List<GameObject> SpawnedItem = new List<GameObject>();
 
     private void Start()
     {
@@ -23,28 +27,71 @@ public class NodeList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!isSpawned)
+        if (GameObject.FindGameObjectWithTag("GameManager").GetComponent<MouseClick>().currentNode != null)
         {
-            for (int i = 0; i < 4; i++)
+            SelectedTarget = GameObject.FindGameObjectWithTag("GameManager").GetComponent<MouseClick>().currentNode;
+
+            childNodes = SelectedTarget.GetChildren();
+            if (childNodes != null)
             {
-                // 60 width of item
+                if (!isSpawned)
+                {
+                   
+                    for (int i = 0; i < 6; i++)
+                    {
+                        // 60 width of item
 
-                //newSpawn Position
-                Vector3 pos = new Vector3(ParentNode.transform.position.x, ParentNode.transform.position.y - (20 * (i + 1)) , ParentNode.transform.position.z);
-                //instantiate item
-                GameObject SpawnedItem = Instantiate(nodePrefab, new Vector3(0,0,0), ParentNode.transform.rotation);
-                //setParent
-                SpawnedItem.transform.SetParent(NodeHolder.transform, false);
-                SpawnedItem.transform.position = pos;
+                        //newSpawn Position
+                        Vector3 pos = new Vector3(ParentNode.transform.position.x, ParentNode.transform.position.y - (20 * (i + 1)), ParentNode.transform.position.z);
+                        //instantiate item
+                        GameObject childNode = Instantiate(nodePrefab, new Vector3(0, 0, 0), ParentNode.transform.rotation);
+                        //setParent
+                        childNode.transform.SetParent(NodeHolder.transform, false);
+                        childNode.transform.position = pos;
 
-                //set name
-                SpawnedItem.GetComponent<Text>().text = SpawnedItem.name  + i;
+                        //set name
+                        //childNode.GetComponent<Text>().text = n.GetName();
+                        SpawnedItem.Add(childNode);
 
+                    }
+                    isSpawned = true;
+                }
             }
-            isSpawned = true;
-        }
 
+            if(isSpawned)
+            {
+
+                if (childNodes != null)
+                {
+                    if(childNodes.Count > SpawnedItem.Count )
+                    {
+                        GameObject childNode = Instantiate(nodePrefab, new Vector3(0, 0, 0), ParentNode.transform.rotation);
+                        childNode.transform.SetParent(NodeHolder.transform, false);
+                        childNode.transform.position = new Vector3(SpawnedItem[SpawnedItem.Count].transform.position.z, SpawnedItem[SpawnedItem.Count].transform.position.y - 20, SpawnedItem[SpawnedItem.Count].transform.position.z);
+                        SpawnedItem.Add(childNode);
+                    }
+
+
+                    int i = 0;
+                    foreach (GameObject g in SpawnedItem)
+                    {
+                        if (childNodes.Count > i)
+                        {
+                            g.GetComponent<Text>().text = childNodes[i].GetName();
+                            g.GetComponent<Text>().color = Def.NodeColour(childNodes[i].mCurrentNodeState);
+                        }
+                        else
+                        {
+                            g.GetComponent<Text>().text = "";
+                            //g.GetComponent<Text>().color = Color.clear;
+                        }
+                        i++;
+                    }
+                }
+            }
+
+
+        }
 
 
 
