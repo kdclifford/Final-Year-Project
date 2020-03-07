@@ -62,16 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
-    <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorController.cs" />
-    <Compile Include="Assets\BrokenVector\LowPolyFencePack\Scripts\DoorToggle.cs" />
-    <Compile Include="Assets\BrokenVector\UltimateDungeonPack\Scripts\LightImprove.cs" />
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
-    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
-    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
-    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
-    <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
     <Compile Include="Assets\NodeList.cs" />
     <Compile Include="Assets\Scripts\AiActionFunctions.cs" />
     <Compile Include="Assets\Scripts\BehaviourTab.cs" />
@@ -98,11 +89,21 @@
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
     <Compile Include="Assets\TreeDisplay.cs" />
-    <None Include="Assets\LowPolyWater_Pack\Shaders\WaterShaded.shader" />
-    <None Include="Assets\LowPolyWater_Pack\LowPoly Island\Credits.txt" />
-    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
-    <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
-    <None Include="Assets\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
+    <Compile Include="Assets\asset packs\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
+    <Compile Include="Assets\asset packs\BrokenVector\LowPolyFencePack\Scripts\DoorController.cs" />
+    <Compile Include="Assets\asset packs\BrokenVector\LowPolyFencePack\Scripts\DoorToggle.cs" />
+    <Compile Include="Assets\asset packs\BrokenVector\UltimateDungeonPack\Scripts\LightImprove.cs" />
+    <Compile Include="Assets\asset packs\LowPolyWater_Pack\Scripts\LowPolyWater.cs" />
+    <Compile Include="Assets\asset packs\NavMeshComponents\Scripts\NavMeshLink.cs" />
+    <Compile Include="Assets\asset packs\NavMeshComponents\Scripts\NavMeshModifier.cs" />
+    <Compile Include="Assets\asset packs\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
+    <Compile Include="Assets\asset packs\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <None Include="Assets\asset packs\LowPolyWater_Pack\Shaders\WaterShaded.shader" />
+    <None Include="Assets\asset packs\LowPolyWater_Pack\LowPoly Island\Credits.txt" />
+    <None Include="Assets\asset packs\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
+    <None Include="Assets\asset packs\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
+    <None Include="Assets\Polygonal Particles\Assets\Shaders\GradientBackgroundShader.shader" />
+    <None Include="Assets\asset packs\BrokenVector\LowPolyBrickHouses\Shaders\FoliageShader.shader" />
     <None Include="Assets\Resources\Enemy1Tree.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/KClifford1/Documents/GitHub/Final-Year-Project/New Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
