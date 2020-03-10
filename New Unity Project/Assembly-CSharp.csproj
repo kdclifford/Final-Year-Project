@@ -65,13 +65,13 @@
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\NodeList.cs" />
     <Compile Include="Assets\Scripts\AiActionFunctions.cs" />
-    <Compile Include="Assets\Scripts\BehaviourTab.cs" />
     <Compile Include="Assets\Scripts\BehaviourTree.cs" />
     <Compile Include="Assets\Scripts\BirdsEyemove.cs" />
     <Compile Include="Assets\Scripts\CNode.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\CameraMove.cs" />
     <Compile Include="Assets\Scripts\CameraSwitcher.cs" />
+    <Compile Include="Assets\Scripts\Cyclops Behaviours.cs" />
     <Compile Include="Assets\Scripts\Defs.cs" />
     <Compile Include="Assets\Scripts\EnemyInfo.cs" />
     <Compile Include="Assets\Scripts\EnemyVision.cs" />
