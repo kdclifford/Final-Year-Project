@@ -16,18 +16,18 @@ public class Def
 
     public static GameObject SpawnNodeUI(CNode spwanNodeUi, GameObject myPrefab)
     {
-    GameObject NodeListUI;
-    GameObject NodeTitle;
+        GameObject NodeListUI;
+        GameObject NodeTitle;
 
-    Text nodetext;
-    RawImage colourImg;
+        Text nodetext;
+        RawImage colourImg;
 
 
-       
 
-    NodeTitle = myPrefab.transform.GetChild(0).gameObject;
-        
-        
+
+        NodeTitle = myPrefab.transform.GetChild(0).gameObject;
+
+
         colourImg = NodeTitle.GetComponent<RawImage>();
 
 
@@ -37,14 +37,14 @@ public class Def
         }
         else if (spwanNodeUi.mCurrentNodeState == ENodeState.Failure)
         {
-            colourImg.color = new Vector4(1,0,0, 0.1f);
+            colourImg.color = new Vector4(1, 0, 0, 0.1f);
         }
         else if (spwanNodeUi.mCurrentNodeState == ENodeState.Running)
         {
             colourImg.color = new Vector4(1, 0.92f, 0.016f, 0.1f);
         }
 
-       // colourImg.color.a = 1;
+        // colourImg.color.a = 1;
 
         NodeTitle = myPrefab.transform.GetChild(0).GetChild(0).gameObject;
         nodetext = NodeTitle.GetComponent<Text>();
@@ -104,7 +104,7 @@ public class Def
     //}
 
 
-    public static Color NodeColour (ENodeState state)
+    public static Color NodeColour(ENodeState state)
     {
         Color NodeText = Color.white;
         switch (state)
@@ -121,7 +121,4 @@ public class Def
 
 
    
-
-
-
 }

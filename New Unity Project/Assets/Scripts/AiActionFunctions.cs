@@ -14,8 +14,7 @@ public class AiActionFunctions : MonoBehaviour
     private EnemyInfo enemyStats;
 
     public List<GameObject> HealthPackList = new List<GameObject>();
-
-
+    private Transform spawnPosition;
 
     [SerializeField] private Vector3 targetLocation;
 
@@ -33,6 +32,7 @@ public class AiActionFunctions : MonoBehaviour
         visibleTargets = GetComponent<FieldOfView>().visibleTargets;
         playerHealth = playerObject.GetComponent<PlayerStats>();
         enemyStats = GetComponent<EnemyInfo>();
+        spawnPosition = transform;
     }
 
 
@@ -94,7 +94,7 @@ public class AiActionFunctions : MonoBehaviour
 
     }
 
-   public ENodeState MoveToPatrolPt()
+    public ENodeState MoveToPatrolPt()
     {
         while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success)
         {
@@ -124,7 +124,7 @@ public class AiActionFunctions : MonoBehaviour
     }
 
 
-   public  ENodeState AttackPlayer()
+    public ENodeState AttackPlayer()
     {
         if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 3f))
         {
@@ -134,10 +134,10 @@ public class AiActionFunctions : MonoBehaviour
         }
         return ENodeState.Failure;
     }
-           
+
     public ENodeState IsHealthLow()
     {
-        if( enemyStats.currentHealth <= (enemyStats.maxHealth / 100) * 10)
+        if (enemyStats.currentHealth <= (enemyStats.maxHealth / 100) * 10)
         {
             return ENodeState.Success;
         }
@@ -150,8 +150,8 @@ public class AiActionFunctions : MonoBehaviour
         if (enemyStats.HealthPack == null)
         {
             foreach (GameObject healthPack in HealthPackList)
-            {               
-                    healthPack.GetComponent<HealthPackInfo>().IsBeingUsed = true;
+            {
+                healthPack.GetComponent<HealthPackInfo>().IsBeingUsed = true;
                 enemyStats.HealthPack.transform.position = healthPack.transform.position;
             }
         }
@@ -175,7 +175,15 @@ public class AiActionFunctions : MonoBehaviour
 
     }
 
+    public ENodeState Guard()
+    {
+        agentNavMesh.SetDestination(new Vector3(0,0,0));
 
+        if (Def.isPointInsideSphere(transform.position, new Vector3(0, 0, 0), 3f))
+        {
+            return ENodeState.Success;
+        }
 
-
+        return ENodeState.Failure;
+    }
 }

@@ -860,6 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviours: {fileID: 0}
   TreeList: {fileID: 0}
   currentState: 0
   currentName: 
@@ -915,8 +916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthPackList: []
   targetLocation: {x: 0, y: 0, z: 0}
-  patrolPts:
-  - {fileID: 1176917531}
+  patrolPts: []
   currentPatrolPt: 0
 --- !u!4 &303808760 stripped
 Transform:
@@ -1503,6 +1503,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6609591272140873970, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
+        type: 3}
+      propertyPath: guardOrPatrol
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84493eaa65d75074ca2c6e2d8a90ff9a, type: 3}
 --- !u!1 &414137228
@@ -2080,6 +2085,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6609591272140873970, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
+        type: 3}
+      propertyPath: guard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609591272140873970, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
+        type: 3}
+      propertyPath: guardOrPatrol
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84493eaa65d75074ca2c6e2d8a90ff9a, type: 3}
 --- !u!1001 &464008198
@@ -2150,6 +2165,16 @@ PrefabInstance:
     - target: {fileID: 666714871922778206, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609591272140873970, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
+        type: 3}
+      propertyPath: guard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609591272140873970, guid: 84493eaa65d75074ca2c6e2d8a90ff9a,
+        type: 3}
+      propertyPath: guardOrPatrol
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3773,12 +3798,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8ebd259b2328454fb14e5f4dde1b6f6, type: 3}
---- !u!1 &940476357 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6828207183129435179, guid: 975012c6894bda3448cc10c756461db8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1455922139}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &949505406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4010,6 +4029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviours: {fileID: 0}
   TreeList: {fileID: 0}
   currentState: 0
   currentName: 
@@ -4381,12 +4401,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 210442451396089719, guid: 1696222c72e89ab4f9026119ef17826b,
     type: 3}
   m_PrefabInstance: {fileID: 7277727856455418763}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1176917531 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6828207183129435179, guid: 975012c6894bda3448cc10c756461db8,
-    type: 3}
-  m_PrefabInstance: {fileID: 431414649}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1181065609 stripped
 Transform:
@@ -8019,6 +8033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffb50aa2c220f448bb937a511002757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviours: {fileID: 0}
   TreeList: {fileID: 0}
   currentState: 0
   currentName: 
@@ -8074,8 +8089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthPackList: []
   targetLocation: {x: 0, y: 0, z: 0}
-  patrolPts:
-  - {fileID: 940476357}
+  patrolPts: []
   currentPatrolPt: 0
 --- !u!4 &1996615697 stripped
 Transform:
@@ -9556,6 +9570,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 222632620134573509, guid: 83e9d642c8afef840a7466e00e23ceb1,
+        type: 3}
+      propertyPath: guard
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 222632620134573509, guid: 83e9d642c8afef840a7466e00e23ceb1,
+        type: 3}
+      propertyPath: guardOrPatrol
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 336398282120553643, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
       propertyPath: m_AnchorMax.y
