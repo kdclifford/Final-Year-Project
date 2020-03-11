@@ -14,7 +14,8 @@ public class AiActionFunctions : MonoBehaviour
     private EnemyInfo enemyStats;
 
     public List<GameObject> HealthPackList = new List<GameObject>();
-    private Transform spawnPosition;
+    public Vector3 spawnPosition;
+    public Vector3 spawnRotation;
 
     [SerializeField] private Vector3 targetLocation;
 
@@ -32,7 +33,8 @@ public class AiActionFunctions : MonoBehaviour
         visibleTargets = GetComponent<FieldOfView>().visibleTargets;
         playerHealth = playerObject.GetComponent<PlayerStats>();
         enemyStats = GetComponent<EnemyInfo>();
-        spawnPosition = transform;
+        spawnPosition = gameObject.transform.position;
+        spawnRotation = gameObject.transform.rotation.eulerAngles;
     }
 
 
@@ -67,12 +69,14 @@ public class AiActionFunctions : MonoBehaviour
     {
         if (visibleTargets.Count > 0)
         {
+            enemyStats.staminaMuliplier = 4;
             agentNavMesh.speed = 7;
             targetLocation = playerObject.transform.position;
             return ENodeState.Success;
         }
         else
         {
+            enemyStats.staminaMuliplier = 2;
             agentNavMesh.speed = 3.5f;
         }
         return ENodeState.Failure;
@@ -82,13 +86,19 @@ public class AiActionFunctions : MonoBehaviour
     {
         HearThePlayer();
         SeeThePlayer();
+        enemyStats.staminaMuliplier = 2;
+        NavMeshPath path = new NavMeshPath();
+        agentNavMesh.CalculatePath(targetLocation, path);
+        if (path.status != NavMeshPathStatus.PathPartial)
+        {
         agentNavMesh.SetDestination(targetLocation);
         aiAnimation.SetInteger("Animation", 2);
 
-        if (Def.isPointInsideSphere(transform.position, targetLocation, 3f))
-        {
-            aiAnimation.SetInteger("Animation", 0);
-            return ENodeState.Success;
+            if (Def.isPointInsideSphere(transform.position, targetLocation, 3f))
+            {
+                aiAnimation.SetInteger("Animation", 0);
+                return ENodeState.Success;
+            }
         }
         return ENodeState.Running;
 
@@ -96,8 +106,9 @@ public class AiActionFunctions : MonoBehaviour
 
     public ENodeState MoveToPatrolPt()
     {
-        while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success)
+        while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success && IsHealthLow() != ENodeState.Success)
         {
+            enemyStats.staminaMuliplier = 2;
             aiAnimation.SetInteger("Animation", 1);
             agentNavMesh.speed = 3.5f;
             if (patrolPts.Count > 0)
@@ -128,6 +139,7 @@ public class AiActionFunctions : MonoBehaviour
     {
         if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 3f))
         {
+            enemyStats.staminaMuliplier = 2;
             aiAnimation.SetInteger("Animation", 4);
             playerHealth.currentHealth -= 10f;
             return ENodeState.Success;
@@ -137,7 +149,7 @@ public class AiActionFunctions : MonoBehaviour
 
     public ENodeState IsHealthLow()
     {
-        if (enemyStats.currentHealth <= (enemyStats.maxHealth / 100) * 10)
+        if (enemyStats.currentHealth <= (enemyStats.maxHealth / enemyStats.maxHealth) * 10)
         {
             return ENodeState.Success;
         }
@@ -159,6 +171,7 @@ public class AiActionFunctions : MonoBehaviour
 
         if (enemyStats.HealthPack != null)
         {
+            enemyStats.staminaMuliplier = 1;
             agentNavMesh.SetDestination(enemyStats.HealthPack.transform.position);
             if (Def.isPointInsideSphere(transform.position, enemyStats.HealthPack.transform.position, 3f))
             {
@@ -177,11 +190,30 @@ public class AiActionFunctions : MonoBehaviour
 
     public ENodeState Guard()
     {
-        agentNavMesh.SetDestination(new Vector3(0,0,0));
+        aiAnimation.SetInteger("Animation", 1);
+        agentNavMesh.speed = 3.5f;
+        agentNavMesh.SetDestination(spawnPosition);
+        enemyStats.staminaMuliplier = 1;
 
-        if (Def.isPointInsideSphere(transform.position, new Vector3(0, 0, 0), 3f))
+        if (Def.isPointInsideSphere(transform.position, spawnPosition, 1f))
         {
-            return ENodeState.Success;
+            enemyStats.staminaMuliplier = 0;
+            if (transform.rotation.eulerAngles.y < spawnRotation.y - 1)
+            {
+                transform.Rotate(Vector3.up * (50 * Time.deltaTime));
+            }
+
+            else if (transform.rotation.eulerAngles.y > spawnRotation.y + 1)
+            {
+                transform.Rotate(Vector3.down * (50 * Time.deltaTime));
+            }
+            else
+            {
+            aiAnimation.SetInteger("Animation", 0);
+                transform.eulerAngles = spawnRotation;
+                return ENodeState.Success;
+            }
+           // transform.Rotate(Vector3.up * (50 * Time.deltaTime));
         }
 
         return ENodeState.Failure;

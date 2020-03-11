@@ -56,7 +56,7 @@ public class TreeOptions : MonoBehaviour
         AttackSight = new CSequenceNode(new List<CNode>() { Sight, Chase, AttackTimer }, "Sight ");
         AttackHeard = new CSequenceNode(new List<CNode>() { Hearing, MoveToEnemyPos }, "Hearing ");
         Health = new CSequenceNode(new List<CNode>() { HealthLow, GetHealth }, "Health ");
-        Guard = new CSequenceNode(new List<CNode>() { HealthInverter, GuardArea }, "Patrol ");
+        Guard = new CSequenceNode(new List<CNode>() { HealthInverter, GuardArea }, "Guard ");
 
         // Root Node
         Root = new CSelectorNode(new List<CNode>() { Health, AttackSight, AttackHeard, Guard }, "Root");
@@ -119,7 +119,7 @@ public class TreeOptions : MonoBehaviour
 
     public CSelectorNode GetTree()
     {
-
+        actions = GetComponent<AiActionFunctions>();
         if (!guardOrPatrol)
         {
             CreateGuardTree();
@@ -142,7 +142,7 @@ public class TreeOptions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actions = GetComponent<AiActionFunctions>();      
+        //actions = GetComponent<AiActionFunctions>();      
     }
 
 
