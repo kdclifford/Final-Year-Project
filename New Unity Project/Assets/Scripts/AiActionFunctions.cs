@@ -22,8 +22,8 @@ public class AiActionFunctions : MonoBehaviour
     public List<GameObject> patrolPts = new List<GameObject>();
     public int currentPatrolPt;
     private PlayerStats playerHealth;
-
-
+    private float StaminaRegenTimer = 0;
+    float seconds;
     void Start()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -100,6 +100,10 @@ public class AiActionFunctions : MonoBehaviour
                 return ENodeState.Success;
             }
         }
+        else
+        {
+            return ENodeState.Failure;
+        }
         return ENodeState.Running;
 
     }
@@ -164,7 +168,7 @@ public class AiActionFunctions : MonoBehaviour
             foreach (GameObject healthPack in HealthPackList)
             {
                 healthPack.GetComponent<HealthPackInfo>().IsBeingUsed = true;
-                enemyStats.HealthPack.transform.position = healthPack.transform.position;
+                enemyStats.HealthPack = healthPack;
             }
         }
 
@@ -175,8 +179,22 @@ public class AiActionFunctions : MonoBehaviour
             agentNavMesh.SetDestination(enemyStats.HealthPack.transform.position);
             if (Def.isPointInsideSphere(transform.position, enemyStats.HealthPack.transform.position, 3f))
             {
-                enemyStats.currentHealth = enemyStats.maxHealth;
-                return ENodeState.Success;
+                enemyStats.staminaMuliplier = 0;
+
+                StaminaRegenTimer += Time.deltaTime;
+                seconds = StaminaRegenTimer % 60;
+                if (seconds > 1)
+                {
+                    StaminaRegenTimer = 0;
+                    enemyStats.currentHealth += (enemyStats.maxHealth / enemyStats.maxHealth) * 10;
+
+                }
+
+
+                if (enemyStats.currentHealth > enemyStats.maxHealth)
+                {
+                    return ENodeState.Success;
+                }
             }
 
             return ENodeState.Running;
