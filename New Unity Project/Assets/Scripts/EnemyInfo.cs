@@ -12,8 +12,8 @@ public class EnemyInfo : MonoBehaviour
     public GameObject HealthPack;
     float staminaTimer = 0.0f;
     float seconds;
-    public int staminaMuliplier  = 1;
-    public int staminaDamage = 3;
+    public float staminaMuliplier  = 1;
+    public int staminaDamage = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +27,10 @@ public class EnemyInfo : MonoBehaviour
     {
         staminaTimer += Time.deltaTime;
         seconds = staminaTimer % 60;
-        if ( seconds > 1)
+        if ( seconds > 1 * staminaMuliplier)
             {
             staminaTimer = 0;
-            currentHealth -= staminaDamage * staminaMuliplier;
+            currentHealth -= staminaDamage;
 
         }
 

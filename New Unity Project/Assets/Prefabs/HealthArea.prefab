@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5163969905831453761}
   m_Layer: 0
   m_Name: HealthArea
-  m_TagString: Untagged
+  m_TagString: StaminaPot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

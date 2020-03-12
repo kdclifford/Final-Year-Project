@@ -16,6 +16,7 @@ TagManager:
   - Player Camera
   - SideMenu
   - NodeHolder
+  - StaminaPot
   layers:
   - Default
   - TransparentFX

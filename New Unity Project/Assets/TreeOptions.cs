@@ -62,6 +62,12 @@ public class TreeOptions : MonoBehaviour
         Root = new CSelectorNode(new List<CNode>() { Health, AttackSight, AttackHeard, Guard }, "Root");
 
         AllNodes.Add(Root);
+        AllNodes.Add(AttackSight);
+        AllNodes.Add(AttackHeard);
+        AllNodes.Add(Health);
+        AllNodes.Add(AttackTimer);
+        AllNodes.Add(Guard);
+        AllNodes.Add(Root);
         AllNodes.Add(AttackHeard);
         AllNodes.Add(AttackSight);
         AllNodes.Add(Chase);

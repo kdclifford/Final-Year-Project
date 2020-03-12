@@ -1663,6 +1663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af8b3a9c16c3934cbd153ed6232e782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomPos: {x: 0, y: 0, z: 0}
   HealthPackList: []
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0}
