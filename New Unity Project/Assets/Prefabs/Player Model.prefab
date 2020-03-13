@@ -6501,7 +6501,7 @@ GameObject:
   - component: {fileID: 8827333290930186640}
   - component: {fileID: 2515212790786430150}
   m_Layer: 10
-  m_Name: Enemy Model
+  m_Name: Player Model
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6514,7 +6514,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6929692742588786726}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.8049128, z: 0, w: -0.5933931}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6637,13 +6637,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animation: {fileID: 1372150669990980998}
   soundRadius: 0
+  stillRadius: 0
   soundSpeed: 0.05
   targetMask:
     serializedVersion: 2
     m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
   footStepTargets: []
   meshResolution: 1
   edgeResolveIterations: 6
@@ -6679,6 +6677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723807e19f704dc45ae8064df98af50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerModel: {fileID: 0}
   Health: 200
   Damage: 0
   HealthBar: {fileID: 0}

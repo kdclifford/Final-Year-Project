@@ -53,7 +53,7 @@ public class MouseClick : MonoBehaviour
         MiniMap = UiCanvas.transform.Find("MiniMapHolder").gameObject;
         HealthBar = UiCanvas.transform.Find("HealthBarHolder").gameObject;
         SelectedAgent = allEnemyObjects[currentEnemyAgent];
-        Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.lockState = CursorLockMode.Locked;
         SwitchedCamera.transform.parent = player.transform;
         SwitchedCamera.transform.localPosition = oldCameraPos;
         SwitchedCamera.transform.rotation = SwitchedCamera.transform.parent.rotation;
@@ -196,7 +196,7 @@ public class MouseClick : MonoBehaviour
 
             MainCam.transform.parent = SelectedAgent.transform.gameObject.transform;
 
-            MainCam.transform.localPosition = new Vector3(0, 4, -8);
+            MainCam.transform.localPosition = new Vector3(0, 1.5f, -2);
             MainCam.transform.rotation = MainCam.transform.parent.rotation;
      
         }
@@ -207,7 +207,8 @@ public class MouseClick : MonoBehaviour
             //HealthBar.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             SwitchedCamera.transform.parent = player.transform;
-            SwitchedCamera.transform.localPosition = oldCameraPos;
+            SwitchedCamera.transform.localPosition = new Vector3(0, 2.0f, -2);
+            //SwitchedCamera.transform.position = oldCameraPos;
             SwitchedCamera.transform.rotation = SwitchedCamera.transform.parent.rotation;
             oneSwitch = false; 
    
