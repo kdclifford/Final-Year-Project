@@ -10,8 +10,10 @@ public class MenuScript : MonoBehaviour
     private GameObject MiniMap;
     private GameObject HealthBar;
     private GameObject MainMenu;
+    private GameObject ControllerMenu;
     private GameObject playerObject;
     private GameObject PlayerCamera;
+    public float testdd;
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class MenuScript : MonoBehaviour
         MiniMap = UiCanvas.transform.Find("MiniMapHolder").gameObject;
         HealthBar = UiCanvas.transform.Find("HealthBarHolder").gameObject;
         MainMenu = UiCanvas.transform.Find("MainMenuHolder").gameObject;
-
+        ControllerMenu = UiCanvas.transform.Find("ControllerInfoHolder").gameObject;
     }
 
 
@@ -32,12 +34,27 @@ public class MenuScript : MonoBehaviour
         PlayerCamera.transform.localPosition = new Vector3(0, 2.0f, -2);
         PlayerCamera.GetComponent<PlayerCamera>().enabled = true;
 
-        SideMenu.SetActive(true);
         MiniMap.SetActive(true);
         HealthBar.SetActive(true);
         MainMenu.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
+        SideMenu.GetComponent<RectTransform>().position = new Vector3(SideMenu.GetComponent<RectTransform>().position.x - 214.5f, SideMenu.GetComponent<RectTransform>().position.y, 0);
+        testdd = SideMenu.GetComponent<RectTransform>().position.x;
+
+
+    }
+
+
+    public void ControllerInfo()
+    {
+        MainMenu.SetActive(false);
+        ControllerMenu.SetActive(true);
+    }
+    public void BackButton()
+    {
+        MainMenu.SetActive(true);
+        ControllerMenu.SetActive(false);
     }
 
 
