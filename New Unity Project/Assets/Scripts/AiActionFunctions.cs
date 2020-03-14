@@ -67,7 +67,15 @@ public class AiActionFunctions : MonoBehaviour
             if (hearTargetList.footStepTargets[i] == this.transform)
             {
                 agentNavMesh.speed = 7;
-                targetRotation = Quaternion.LookRotation(playerObject.transform.position - transform.position);
+
+                 targetLocation = playerObject.transform.position;
+                NavMeshPath path = new NavMeshPath();
+                agentNavMesh.CalculatePath(targetLocation, path);
+                if (path.status != NavMeshPathStatus.PathPartial && targetLocation.y < 2f)
+                {
+               
+
+                    targetRotation = Quaternion.LookRotation(playerObject.transform.position - transform.position);
 
                 enemyPos = transform.position;
                 enemyPos.y = 1f;
@@ -82,10 +90,13 @@ public class AiActionFunctions : MonoBehaviour
                     }
                 }
 
+                }
+                else
+                {
+                    return ENodeState.Failure;
+                }
 
 
-
-                targetLocation = playerObject.transform.position;
                 return ENodeState.Success;
             }
         }
@@ -118,7 +129,7 @@ public class AiActionFunctions : MonoBehaviour
         enemyStats.staminaMuliplier = 0.5f;
         NavMeshPath path = new NavMeshPath();
         agentNavMesh.CalculatePath(targetLocation, path);
-        if (path.status != NavMeshPathStatus.PathPartial)
+        if (path.status != NavMeshPathStatus.PathPartial && targetLocation.y < 2f)
         {
             agentNavMesh.SetDestination(targetLocation);
             aiAnimation.SetInteger("Animation", 2);
@@ -188,6 +199,7 @@ public class AiActionFunctions : MonoBehaviour
     }
 
 
+    //Attack the Player if close
     public ENodeState AttackPlayer()
     {
         if (Def.isPointInsideSphere(transform.position, playerObject.transform.position, 3f))

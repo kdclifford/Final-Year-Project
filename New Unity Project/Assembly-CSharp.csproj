@@ -63,8 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GameManager.cs" />
-    <Compile Include="Assets\MenuScript.cs" />
-    <Compile Include="Assets\NodeList.cs" />
     <Compile Include="Assets\Scripts\AiActionFunctions.cs" />
     <Compile Include="Assets\Scripts\BehaviourTree.cs" />
     <Compile Include="Assets\Scripts\BirdsEyemove.cs" />
@@ -80,16 +78,19 @@
     <Compile Include="Assets\Scripts\HealthPackInfo.cs" />
     <Compile Include="Assets\Scripts\LookAtPlayerCamera.cs" />
     <Compile Include="Assets\Scripts\MenuInfo.cs" />
+    <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MiniMapMove.cs" />
     <Compile Include="Assets\Scripts\MouseClick.cs" />
     <Compile Include="Assets\Scripts\NewInspectorWindow\TreeVisualization.cs" />
+    <Compile Include="Assets\Scripts\NodeList.cs" />
     <Compile Include="Assets\Scripts\NodeStates.cs" />
     <Compile Include="Assets\Scripts\ParseXML.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
-    <Compile Include="Assets\TreeDisplay.cs" />
-    <Compile Include="Assets\TreeOptions.cs" />
+    <Compile Include="Assets\Scripts\SoundPlayer.cs" />
+    <Compile Include="Assets\Scripts\TreeDisplay.cs" />
+    <Compile Include="Assets\Scripts\TreeOptions.cs" />
     <Compile Include="Assets\asset packs\BrokenVector\LowPolyBrickHouses\Scripts\ModelCustomizer.cs" />
     <Compile Include="Assets\asset packs\BrokenVector\LowPolyFencePack\Scripts\DoorController.cs" />
     <Compile Include="Assets\asset packs\BrokenVector\LowPolyFencePack\Scripts\DoorToggle.cs" />
