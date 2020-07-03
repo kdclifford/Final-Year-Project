@@ -168,8 +168,7 @@ public class AiActionFunctions : MonoBehaviour
 
         }
 
-        while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success && IsHealthLow() != ENodeState.Success)
-        {
+       
             enemyStats.staminaMuliplier = 0.5f;
             aiAnimation.SetInteger("Animation", 1);
             agentNavMesh.speed = 3.5f;
@@ -192,10 +191,8 @@ public class AiActionFunctions : MonoBehaviour
 
 
 
-            // }
-            return ENodeState.Running;
-        }
-        return ENodeState.Failure;
+         
+        return ENodeState.Running;
     }
 
 

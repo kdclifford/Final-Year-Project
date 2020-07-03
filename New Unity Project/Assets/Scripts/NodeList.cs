@@ -31,7 +31,9 @@ public class NodeList : MonoBehaviour
         {
             SelectedTarget = GameObject.FindGameObjectWithTag("GameManager").GetComponent<MouseClick>().currentNode;
 
+            // childNodes = SelectedTarget.GetChildren();
             childNodes = SelectedTarget.GetChildren();
+
             if (childNodes != null)
             {
                 if (!isSpawned)

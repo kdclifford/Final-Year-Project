@@ -1814,7 +1814,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepClip: {fileID: 8300000, guid: e37c431bc91c71748b69b37d70b675b7, type: 3}
   AttackClip: {fileID: 8300000, guid: 4674f2492d1e3624baf0e7f5590ddaa1, type: 3}
-  IdleClip: []
+  IdleClip:
+  - {fileID: 8300000, guid: e0bff198c7920e0438ce049ae40dc946, type: 3}
+  - {fileID: 8300000, guid: 5cc7cd5876aa7ed43aa29ee95a457389, type: 3}
 --- !u!1 &7817393815711796620
 GameObject:
   m_ObjectHideFlags: 0

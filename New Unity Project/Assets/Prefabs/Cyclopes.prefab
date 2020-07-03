@@ -1245,7 +1245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepClip: {fileID: 8300000, guid: e37c431bc91c71748b69b37d70b675b7, type: 3}
   AttackClip: {fileID: 8300000, guid: 9fa07e9aee7ec2c4f9d51bf5e22e6811, type: 3}
-  IdleClip: []
+  IdleClip:
+  - {fileID: 8300000, guid: e0bff198c7920e0438ce049ae40dc946, type: 3}
+  - {fileID: 8300000, guid: 5cc7cd5876aa7ed43aa29ee95a457389, type: 3}
 --- !u!82 &1257299422627074354
 AudioSource:
   m_ObjectHideFlags: 0

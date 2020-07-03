@@ -7,12 +7,12 @@ using UnityEngine.UI;
 //Parent Class of All the behaviour tree Nodes
 public abstract class CNode
 {
-    protected CNode mParent;
+    private CNode mParent;
     private string mNameOfNode;
-    public ENodeState mCurrentNodeState = ENodeState.Failure;
-    private List<CNode> childrenNodes;
+    public ENodeState mCurrentNodeState = ENodeState.Failure;    
     public CUI mNodeUI;
     public GameObject mPrefab;
+    public List<CNode> childNodes;
 
     //public abstract ENodeState RunTree();
     public abstract CNode RunTree();
@@ -67,16 +67,30 @@ public abstract class CNode
     {
         mParent = parent;
     }
-
     public List<CNode> GetChildren()
     {
-        return childrenNodes;
+        return childNodes;
     }
+  
+
+
+}
+
+public abstract class CDecoratorNode : CNode
+{   
+    public void SetChildren(CNode children)
+    {
+        childNodes = new List<CNode>();
+        childNodes.Add(children);
+    }
+}
+
+public abstract class CCompositeNode : CNode
+{
     public void SetChildren(List<CNode> children)
     {
-        childrenNodes = children;
+        childNodes = children;
     }
-
 }
 
 public class CActionNode : CNode
@@ -113,7 +127,7 @@ public class CActionNode : CNode
     }
 }
 
-public class CSelectorNode : CNode
+public class CSelectorNode : CCompositeNode
 {
     public CNode mCurrentChildNode;
     //public List<CNode> childNodes = new List<CNode>();
@@ -166,7 +180,7 @@ public class CSelectorNode : CNode
 
 }
 
-public class CSequenceNode : CNode
+public class CSequenceNode : CCompositeNode
 {
     public CNode mCurrentChildNode;
     //public List<CNode> childNodes = new List<CNode>();
@@ -218,16 +232,16 @@ public class CSequenceNode : CNode
 
 }
 
-public class CTimerNode : CNode
+public class CTimerNode : CDecoratorNode
 {
     public delegate ENodeState mAction();
-    CNode mChild;
     public float mTimer;
     public float mTimerDelay;
 
     public CTimerNode(CNode childNode, string name, float delay)
     {
-        mChild = childNode;
+        SetChildren(childNode);
+        GetChildren()[0].SetParent(this);
         SetName(name + "Timer");
         mNodeUI = new CUI();
         mNodeUI.NodeName = GetName() + "Timer";
@@ -240,10 +254,10 @@ public class CTimerNode : CNode
         if (mTimer + mTimerDelay < Time.time)
         {
             mTimer = Time.time;
-            mChild.RunTree();
+            GetChildren()[0].RunTree();
             mCurrentNodeState = ENodeState.Success;
             //UpdatePrefab();
-            return mChild;
+            return GetChildren()[0];
         }
 
         mCurrentNodeState = ENodeState.Failure;
@@ -254,26 +268,26 @@ public class CTimerNode : CNode
 
 
 
-public class CInverterNode : CNode
+public class CInverterNode : CDecoratorNode
 {
     public delegate ENodeState mAction();
-    CNode mChild;
 
     public CInverterNode(CNode childNode, string name)
     {
-        mChild = childNode;
+        SetChildren(childNode);
+        GetChildren()[0].SetParent(this);
         SetName(name + "Inverter");
     }
 
     public override CNode RunTree()
     {
-        mChild.RunTree();
-        if (mChild.mCurrentNodeState == ENodeState.Failure)
+        GetChildren()[0].RunTree();
+        if (GetChildren()[0].mCurrentNodeState == ENodeState.Failure)
         {
             mCurrentNodeState = ENodeState.Success;
             return this;
         }
-        else if (mChild.mCurrentNodeState == ENodeState.Success)
+        else if (GetChildren()[0].mCurrentNodeState == ENodeState.Success)
         {
             mCurrentNodeState = ENodeState.Failure;
             return this;

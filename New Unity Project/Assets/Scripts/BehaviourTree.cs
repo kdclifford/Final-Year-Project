@@ -47,7 +47,7 @@ public class BehaviourTree : MonoBehaviour
 
        else if (currentnode.mCurrentNodeState == ENodeState.Running)
        {
-           currentnode = currentnode.RunTree();
+           currentnode = currentnode.GetParent().RunTree();
        }
         else if (currentnode.mCurrentNodeState == ENodeState.Failure || currentnode.mCurrentNodeState == ENodeState.Success)
         {

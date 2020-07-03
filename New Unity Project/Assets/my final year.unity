@@ -2983,6 +2983,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1626142541039848110, guid: 83e9d642c8afef840a7466e00e23ceb1,
+        type: 3}
+      propertyPath: IdleClip.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626142541039848110, guid: 83e9d642c8afef840a7466e00e23ceb1,
+        type: 3}
+      propertyPath: IdleClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0bff198c7920e0438ce049ae40dc946, type: 3}
+    - target: {fileID: 1626142541039848110, guid: 83e9d642c8afef840a7466e00e23ceb1,
+        type: 3}
+      propertyPath: IdleClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5cc7cd5876aa7ed43aa29ee95a457389, type: 3}
     - target: {fileID: 2178018831358386001, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
       propertyPath: enemyNameText
@@ -4392,6 +4407,16 @@ PrefabInstance:
       propertyPath: IdleClip.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2426268054954798390, guid: b325cde09bf20104f95b3b3b0f5db2d9,
+        type: 3}
+      propertyPath: IdleClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0bff198c7920e0438ce049ae40dc946, type: 3}
+    - target: {fileID: 2426268054954798390, guid: b325cde09bf20104f95b3b3b0f5db2d9,
+        type: 3}
+      propertyPath: IdleClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5cc7cd5876aa7ed43aa29ee95a457389, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b325cde09bf20104f95b3b3b0f5db2d9, type: 3}
 --- !u!4 &658768854 stripped

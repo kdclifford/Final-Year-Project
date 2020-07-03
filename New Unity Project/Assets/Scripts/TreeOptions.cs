@@ -30,6 +30,8 @@ public class TreeOptions : MonoBehaviour
     CSequenceNode Guard;
 
     CInverterNode HealthInverter;
+    CInverterNode HearingInverter;
+    CInverterNode SightInverter;
     CTimerNode AttackTimer;
     public CSelectorNode Root;
     void CreateGuardTree()
@@ -94,6 +96,8 @@ public class TreeOptions : MonoBehaviour
 
         // Inverter Nodes
         HealthInverter = new CInverterNode(HealthLow, "Health");
+        HearingInverter = new CInverterNode(Hearing, "Hearing");
+        SightInverter = new CInverterNode(Sight, "Sight");
 
         // Timer Nodes
         AttackTimer = new CTimerNode(AttackThePlayer, "Attack", 1f);
@@ -103,7 +107,7 @@ public class TreeOptions : MonoBehaviour
         AttackSight = new CSequenceNode(new List<CNode>() { Sight, Chase, AttackTimer }, "Sight ");
         AttackHeard = new CSequenceNode(new List<CNode>() { Hearing, MoveToEnemyPos }, "Hearing ");
         Health = new CSequenceNode(new List<CNode>() { HealthLow, GetHealth }, "Health ");
-        Patrol = new CSequenceNode(new List<CNode>() { HealthInverter, PatrolPT }, "Patrol ");
+        Patrol = new CSequenceNode(new List<CNode>() { SightInverter, HearingInverter, HealthInverter, PatrolPT }, "Patrol ");
 
         // Root Node
         Root = new CSelectorNode(new List<CNode>() { Health, AttackSight, AttackHeard, Patrol }, "Root");

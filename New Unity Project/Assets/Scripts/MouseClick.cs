@@ -137,30 +137,33 @@ public class MouseClick : MonoBehaviour
         {
             currentNode = SelectedAgent.GetComponent<BehaviourTree>().currentnode;
 
-            if (currentNode.GetParent() != null)
+            if (currentNode != null)
             {
-                menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetParent().GetName();
-            }
-            else
-            {
-                menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetName();
-            }
+                if (currentNode.GetParent() != null)
+                {
+                    menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetParent().GetName();
+                }
+                else
+                {
+                    menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().text = currentNode.GetName();
+                }
 
 
-            Color NodeText = Color.white;
-            switch (currentNode.mCurrentNodeState)
-            {
-                case ENodeState.Success:
-                    NodeText = Color.green;
-                    break;
-                case ENodeState.Failure:
-                    NodeText = Color.red;
-                    break;
-                case ENodeState.Running:
-                    NodeText = Color.yellow;
-                    break;
+                Color NodeText = Color.white;
+                switch (currentNode.mCurrentNodeState)
+                {
+                    case ENodeState.Success:
+                        NodeText = Color.green;
+                        break;
+                    case ENodeState.Failure:
+                        NodeText = Color.red;
+                        break;
+                    case ENodeState.Running:
+                        NodeText = Color.yellow;
+                        break;
+                }
+                menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().color = NodeText;
             }
-            menuCanvas.transform.Find("NodeHolder").transform.Find("ParentNode").GetComponent<Text>().color = NodeText;
         }
 
 
