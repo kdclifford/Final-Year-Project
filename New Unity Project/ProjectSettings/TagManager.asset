@@ -17,6 +17,7 @@ TagManager:
   - SideMenu
   - NodeHolder
   - StaminaPot
+  - AudioManager
   layers:
   - Default
   - TransparentFX

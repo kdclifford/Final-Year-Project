@@ -6,47 +6,42 @@ public class SoundPlayer : MonoBehaviour
 {
 
 
-    [SerializeField]
-    public AudioClip stepClip;
-    public AudioClip AttackClip;
-    public AudioClip[] IdleClip;
-
-    private AudioSource audioSource;
+  
+    private AudioManager audioManager;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Step()
     {
-
-        audioSource.PlayOneShot(stepClip);
+        audioManager.Play("FootStep", gameObject);        
     }
 
     private void Bite()
     {
 
-        audioSource.PlayOneShot(AttackClip);
+        audioManager.Play("Bite", gameObject);
     }
 
     private void Punch()
     {
 
-        audioSource.PlayOneShot(AttackClip);
+        audioManager.Play("Punch", gameObject);
     }
 
 
-    private void Idle()
-    {
-        AudioClip clip = GetidleClip();
-        audioSource.PlayOneShot(clip);
-    }
+    //private void Idle()
+    //{
+    //    AudioClip clip = GetidleClip();
+    //    audioSource.PlayOneShot(clip);
+    //}
 
-    private AudioClip GetidleClip()
-    {
-        return IdleClip[UnityEngine.Random.Range(0, IdleClip.Length)];
-    }
+    //private AudioClip GetidleClip()
+    //{
+    //    return IdleClip[UnityEngine.Random.Range(0, IdleClip.Length)];
+    //}
 
 
 
