@@ -12,8 +12,9 @@ public class CameraMove : MonoBehaviour
     private float totalRun = 1.0f;
 
     void Update()
-    {
-            lastMouse = Input.mousePosition - lastMouse;
+    {        
+
+        lastMouse = Input.mousePosition - lastMouse;
         if (Input.GetMouseButton(1))
         {
             lastMouse = new Vector3(-lastMouse.y * camSens, lastMouse.x * camSens, 0);

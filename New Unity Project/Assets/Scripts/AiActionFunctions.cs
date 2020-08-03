@@ -150,25 +150,27 @@ public class AiActionFunctions : MonoBehaviour
 
     public ENodeState MoveToPatrolPt()
     {
-        if (randomPos == new Vector3(0, 0, 0))
+        while (SeeThePlayer() != ENodeState.Success && HearThePlayer() != ENodeState.Success && IsHealthLow() != ENodeState.Success)
         {
-            while (!pathAccessible)
+            if (randomPos == new Vector3(0, 0, 0))
             {
-                randomPos = new Vector3(-25f, 0f, 1.53f) + Random.insideUnitSphere * 60;
-                randomPos.y = 0.3f;
-                NavMeshPath path = new NavMeshPath();
-                agentNavMesh.CalculatePath(randomPos, path);
-                if (path.status != NavMeshPathStatus.PathPartial)
+                while (!pathAccessible)
                 {
-                    pathAccessible = true;
-                    break;
+                    randomPos = new Vector3(-25f, 0f, 1.53f) + Random.insideUnitSphere * 60;
+                    randomPos.y = 0.3f;
+                    NavMeshPath path = new NavMeshPath();
+                    agentNavMesh.CalculatePath(randomPos, path);
+                    if (path.status != NavMeshPathStatus.PathPartial)
+                    {
+                        pathAccessible = true;
+                        break;
+                    }
+
                 }
 
             }
 
-        }
 
-       
             enemyStats.staminaMuliplier = 0.5f;
             aiAnimation.SetInteger("Animation", 1);
             agentNavMesh.speed = 3.5f;
@@ -191,8 +193,10 @@ public class AiActionFunctions : MonoBehaviour
 
 
 
-         
-        return ENodeState.Running;
+
+            return ENodeState.Running;
+        }
+        return ENodeState.Failure;
     }
 
 
@@ -256,7 +260,7 @@ public class AiActionFunctions : MonoBehaviour
                 if (seconds > 0.05f)
                 {
                     StaminaRegenTimer = 0;
-                    enemyStats.currentHealth += 1;
+                    enemyStats.currentHealth += 5;
 
                 }
 

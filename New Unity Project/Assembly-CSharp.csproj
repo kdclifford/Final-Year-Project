@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Defs.cs" />
     <Compile Include="Assets\Scripts\EnemyInfo.cs" />
     <Compile Include="Assets\Scripts\EnemyVision.cs" />
+    <Compile Include="Assets\Scripts\ExitGame.cs" />
     <Compile Include="Assets\Scripts\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\FootSteps.cs" />
     <Compile Include="Assets\Scripts\HealthPackInfo.cs" />
@@ -82,10 +83,8 @@
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\MiniMapMove.cs" />
     <Compile Include="Assets\Scripts\MouseClick.cs" />
-    <Compile Include="Assets\Scripts\NewInspectorWindow\TreeVisualization.cs" />
     <Compile Include="Assets\Scripts\NodeList.cs" />
     <Compile Include="Assets\Scripts\NodeStates.cs" />
-    <Compile Include="Assets\Scripts\ParseXML.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />

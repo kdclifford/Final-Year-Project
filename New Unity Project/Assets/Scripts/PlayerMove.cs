@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR 
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -30,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     {
         PlayerMovement();
     }
+
     private void PlayerMovement()
     {        
         float horizInput = Input.GetAxis(horizontalInputName);

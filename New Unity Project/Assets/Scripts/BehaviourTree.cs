@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR 
 using UnityEditor.Animations;
-using UnityEngine;
+#endif 
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine;
 
 
 public class CUI
@@ -47,7 +49,7 @@ public class BehaviourTree : MonoBehaviour
 
        else if (currentnode.mCurrentNodeState == ENodeState.Running)
        {
-           currentnode = currentnode.GetParent().RunTree();
+            currentnode = currentnode.RunTree();
        }
         else if (currentnode.mCurrentNodeState == ENodeState.Failure || currentnode.mCurrentNodeState == ENodeState.Success)
         {

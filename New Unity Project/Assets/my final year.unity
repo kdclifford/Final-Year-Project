@@ -3164,7 +3164,7 @@ PrefabInstance:
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Model (1)
+      value: Dave
       objectReference: {fileID: 0}
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
@@ -4394,7 +4394,7 @@ PrefabInstance:
     - target: {fileID: 502133525108610819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
       propertyPath: m_Name
-      value: Cyclopes (2)
+      value: Mark
       objectReference: {fileID: 0}
     - target: {fileID: 502133525108610819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
@@ -5108,7 +5108,7 @@ PrefabInstance:
     - target: {fileID: 502133525108610819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
       propertyPath: m_Name
-      value: Cyclopes (3)
+      value: Alan
       objectReference: {fileID: 0}
     - target: {fileID: 503050972853320819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
@@ -7370,7 +7370,7 @@ PrefabInstance:
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Model (2)
+      value: Julia
       objectReference: {fileID: 0}
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
@@ -9670,9 +9670,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1514655817}
-  - component: {fileID: 1514655816}
   - component: {fileID: 1514655818}
   - component: {fileID: 1514655819}
+  - component: {fileID: 1514655816}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameManager
@@ -9687,21 +9687,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514655815}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0126330a79eb8ea4a8dd40bb86f8ef00, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a382b25b02c03745b4301d035f641b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: 
-  isMapSpawned: 0
-  mapSize: 34
-  x: 3
-  y: 0
-  z: 3
-  myPrefab: {fileID: 1368698378250278207, guid: d1af7e06989f555419c38a760e6ed294,
-    type: 3}
-  myPrefab2: {fileID: 4897385597618819714, guid: 9f77ad801faa3c04fa9ec4bfc72cd844,
-    type: 3}
 --- !u!4 &1514655817
 Transform:
   m_ObjectHideFlags: 0
@@ -16635,7 +16625,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: e37c431bc91c71748b69b37d70b675b7, type: 3}
     loop: 0
     Sound3D: 1
-    volume: 0.47
+    volume: 0.85
     pitch: 0.41
   - name: Bite
     clip: {fileID: 8300000, guid: 5da4cab93da4ee144acc841ca88b7267, type: 3}
@@ -18466,7 +18456,7 @@ PrefabInstance:
     - target: {fileID: 502133525108610819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
       propertyPath: m_Name
-      value: Cyclopes
+      value: Donny
       objectReference: {fileID: 0}
     - target: {fileID: 502133525108610819, guid: b325cde09bf20104f95b3b3b0f5db2d9,
         type: 3}
@@ -21444,7 +21434,7 @@ PrefabInstance:
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Model
+      value: Sally
       objectReference: {fileID: 0}
     - target: {fileID: 7817107849916934708, guid: 83e9d642c8afef840a7466e00e23ceb1,
         type: 3}

@@ -1188,8 +1188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNameText: {fileID: 984494046075362956}
   enemyHealthSlider: {fileID: 0}
-  maxHealth: 500
-  currentHealth: 500
+  maxHealth: 288
+  currentHealth: 288
   HealthPack: {fileID: 0}
   staminaMuliplier: 1
   staminaDamage: 3
@@ -1243,11 +1243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b94db78e8586794abc3161f606de764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepClip: {fileID: 8300000, guid: e37c431bc91c71748b69b37d70b675b7, type: 3}
-  AttackClip: {fileID: 8300000, guid: 9fa07e9aee7ec2c4f9d51bf5e22e6811, type: 3}
-  IdleClip:
-  - {fileID: 8300000, guid: e0bff198c7920e0438ce049ae40dc946, type: 3}
-  - {fileID: 8300000, guid: 5cc7cd5876aa7ed43aa29ee95a457389, type: 3}
 --- !u!82 &1257299422627074354
 AudioSource:
   m_ObjectHideFlags: 0

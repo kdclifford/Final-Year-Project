@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR 
 using UnityEditor.Animations;
+#endif
 using System.Collections.Generic;
 
 public class FootSteps : MonoBehaviour
